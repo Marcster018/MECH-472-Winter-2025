@@ -36,27 +36,27 @@ void find_hollow_circles(int& nlabels, image& rgb, image& label, image& a, image
 
 		if (*plc == 0) {
 
-			//Red
-			if (R > 100 && G < 100 && B < 100) {
-				draw_point_rgb(rgb, ic, jc, 255, 0, 0);
+			//green
+			if (R < 120 && G >120 && B < 150) {
+				draw_point_rgb(rgb, ic, jc, 0, 255, 0);
 				Ic[0] = ic;
 				Jc[0] = jc;
 			}
-			//green
-			else if (R < 120 && G >120 && B < 150) {
-				draw_point_rgb(rgb, ic, jc, 0, 255, 0);
+			//Red
+			else if (R > 100 && G < 100 && B < 100) {
+				draw_point_rgb(rgb, ic, jc, 255, 0, 0);
 				Ic[1] = ic;
 				Jc[1] = jc;
-			}
-			//blue
-			else if (R < 60 && G < 175 && B > 200) {
-				draw_point_rgb(rgb, ic, jc, 0, 0, 255);
-				Ic[2] = ic;
-				Jc[2] = jc;
 			}
 			//orange
 			else if (R > 220 && G > 130 && G < 200 && B < 150) {
 				draw_point_rgb(rgb, ic, jc, 255, 100, 0);
+				Ic[2] = ic;
+				Jc[2] = jc;
+			}
+			//blue
+			else if (R < 60 && G < 175 && B > 200) {
+				draw_point_rgb(rgb, ic, jc, 0, 0, 255);
 				Ic[3] = ic;
 				Jc[3] = jc;
 			}
@@ -64,6 +64,63 @@ void find_hollow_circles(int& nlabels, image& rgb, image& label, image& a, image
 	}
 
 }
+
+void opponent_track(int Ic[4], int Jc[4], int Oc[2], image &rgb, int &pw_r, int &pw_l) {
+	
+	int i = (Ic[3] + Ic[2])/2;
+	int j = (Jc[3] + Jc[2])/2;
+	
+	Oc[0] = i;
+	Oc[1] = j;
+	int width;
+	ibyte* p, *pc;
+	width=rgb.width;
+
+	//drawing line between red point and enemy
+	//line is y=mx+b
+	
+	int dx = (Ic[0] - i);
+	int dy = (Jc[0] - j);
+
+	float m,b,y;
+
+	if (dx == 0){
+		m = 0;
+		b = Ic[0];
+	}
+	else {
+		m = (float)dy / (float)dx;
+		b = Jc[0] - Ic[0] * m;
+	}
+	//cout << "\ny= " << m << " + " << b;
+
+	//want to check if the red dot Ic[1], Jc[1] is bellow or above the line
+	float deadzone=10;
+	y = m * Ic[1] + b;
+
+	if (Jc[1] < (y-deadzone)) {
+		cout << "\nbelow";
+		pw_r = 2000;
+		pw_l = 2000;
+	}
+	else if (Jc[1] > (y + deadzone)) {
+		cout << "\nabove";
+		pw_r = 1000;
+		pw_l = 1000;
+	}
+	else {
+		cout << "\nlocked in";
+		pw_r = 1500;
+		pw_l = 1500;
+	}
+	
+
+
+	//drawing point
+	draw_point_rgb(rgb, i, j, 0, 0, 255);
+
+}
+
 
 //Fred functions
 int auto_select_shape_by_size(i2byte& nlabel, image& label)
