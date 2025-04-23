@@ -67,6 +67,8 @@ void find_hollow_circles(int& nlabels, image& rgb, image& label, image& a, image
 //Fred functions
 int auto_select_shape_by_size(i2byte& nlabel, image& label)
 // select an object from a binary image based on its area
+// use instead of the select_object function in the
+// find_object function
 {
 	#define MAX_LABELS 256
 	int labelAreas[MAX_LABELS] = { 0 };
