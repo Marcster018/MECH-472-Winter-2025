@@ -70,7 +70,7 @@ void opponent_track(int Ic[4], int Jc[4], int Oc[2], image &rgb, int &pw_r, int 
 	int i = (Ic[3] + Ic[2])/2;
 	int j = (Jc[3] + Jc[2])/2;
 	
-	Oc[0] = i;
+	Oc[0] = i; //if ever the mid point of the robot wants to be reuse for other things
 	Oc[1] = j;
 	int width;
 	ibyte* p, *pc;
