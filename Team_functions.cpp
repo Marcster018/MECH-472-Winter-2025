@@ -1,6 +1,10 @@
 //mech 472 functions
 
 #include "Team_functions.h"
+#include <vector>
+#include <array>
+
+using namespace std;
 
 //Anthony functions
 void find_hollow_circles(int& nlabels, image& rgb, image& label, image& a, image& rgb0, int Ic[4], int Jc[4]) {
@@ -164,10 +168,10 @@ int auto_select_shape_by_size(i2byte& nlabel, image& label)
 
 //Jacob Functions
 
-void get_pixel_colour_rgb(image& rgb, int Ic, int Jc, int(&Colour)[3]) {
+void Get_Object_RGB_Colour(image& rgb, int number_labels, vector<array<int, 5>>& Pos_RGB) {
 
 	//Create Local Variables
-	int k;
+	int i, j, Pixel_Number, k;
 	int height, width;
 	ibyte* p;
 
@@ -175,9 +179,22 @@ void get_pixel_colour_rgb(image& rgb, int Ic, int Jc, int(&Colour)[3]) {
 	height = rgb.height;
 	width = rgb.width;
 	p = rgb.pdata;
-	k = (Jc * width) + Ic;
 
-	for (int i = 0; i < 3; i++) {
-		Colour[i] = p[3 * k + i];
+	cout << "\nUsing the following format: [Ic, Jc, R, G, B]";
+	//Identify Colour of Each Object
+	for (k = 1; k <= number_labels; k++) {
+		for (i = 0; i < 3; i++) {
+
+			Pixel_Number = (Pos_RGB[k][1] * width) + Pos_RGB[k][0];
+			j = i + 2;
+			Pos_RGB[k][j] = p[3 * Pixel_Number + i];
+		}
+		cout << "\n\nObject " << k << " has the follwing position and RGB code:";
+		cout << "\nIc= " << (int)Pos_RGB[k][0];
+		cout << "\nJc= " << (int)Pos_RGB[k][1];
+		cout << "\nR= " << (int)Pos_RGB[k][4];
+		cout << "\nG= " << (int)Pos_RGB[k][3];
+		cout << "\nB= " << (int)Pos_RGB[k][2];
+		draw_point_rgb(rgb, (int)Pos_RGB[k][0], (int)Pos_RGB[k][1], 255, 255, 255);
 	}
 }

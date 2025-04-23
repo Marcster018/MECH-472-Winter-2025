@@ -1,5 +1,8 @@
 //mech 472 functions
+#include <vector>
+#include <array>
 
+using namespace std;
 
 //Anthony functions
 void find_hollow_circles(int& nlabels, image& rgb, image& label, image& a, image& rgb0, int Ic[4], int Jc[4])
@@ -11,4 +14,4 @@ int auto_select_shape_by_size(i2byte& nlabel, image& label)
 //marc functions
 
 //Jacob Functions
-void get_pixel_colour_rgb(image& rgb, int Ic, int Jc, int(&Colour)[3])
+void Get_Object_RGB_Colour(image& rgb, int number_labels, vector<array<int, 5>>& Pos_RGB)
