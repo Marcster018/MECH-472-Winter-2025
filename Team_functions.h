@@ -65,7 +65,39 @@ void find_hollow_circles(int& nlabels, image& rgb, image& label, image& a, image
 }
 
 //Fred functions
+int auto_select_shape_by_size(i2byte& nlabel, image& label)
+// select an object from a binary image based on its area
+{
+	#define MAX_LABELS 256
+	int labelAreas[MAX_LABELS] = { 0 };
+	int wheelArea = 500;
+	i2byte* pl;
 
+	acquire_image_sim(rgb0);
+	label_objects(tvalue);
+
+	pl = (i2byte*)label.pdata;
+
+	//measuring the area (amount of pixels) of a shape
+	for (int y = 0; y < label.height; y++) {
+		for (int x = 0; x < label.width; x++) {
+			int labelVal = *(pl + y * label.width + x); //get label at pixel (x,y)
+			if (labelVal > 0 && labelVal < MAX_LABELS) {
+				labelAreas[labelVal]++; //increment that label's area count
+			}
+		}
+	}
+
+	//checks each shape that are of a certain area
+	//if multiple, only selects one (the last one)
+	for (int l = 1; l < MAX_LABELS; l++) {
+		if (labelAreas[l] < 1000 && labelAreas[l]>100) {
+			wheelArea = labelAreas[l];
+			nlabel = l;
+		}
+	}
+	return 0; // no errors
+}
 
 //marc functions
 
