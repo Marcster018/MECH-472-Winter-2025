@@ -74,7 +74,7 @@ void opponent_track(int Ic[4], int Jc[4], int Oc[2], image &rgb, int &pw_r, int 
 	int i = (Ic[3] + Ic[2])/2;
 	int j = (Jc[3] + Jc[2])/2;
 	
-	Oc[0] = i; //if ever the mid point of the robot wants to be reuse for other things
+	Oc[0] = i;
 	Oc[1] = j;
 	int width;
 	ibyte* p, *pc;
@@ -102,21 +102,37 @@ void opponent_track(int Ic[4], int Jc[4], int Oc[2], image &rgb, int &pw_r, int 
 	float deadzone=10;
 	y = m * Ic[1] + b;
 
-	if (Jc[1] < (y-deadzone)) {
-		cout << "\nbelow";
-		pw_r = 2000;
-		pw_l = 2000;
+	if (i <= Ic[0]) {
+		if (Jc[1] < (y - deadzone)) {
+			pw_r = 2000;
+			pw_l = 2000;
+		}
+		else if (Jc[1] > (y + deadzone)) {
+			pw_r = 1000;
+			pw_l = 1000;
+		}
+		else {
+			pw_r = 1500;
+			pw_l = 1500;
+		}
 	}
-	else if (Jc[1] > (y + deadzone)) {
-		cout << "\nabove";
-		pw_r = 1000;
-		pw_l = 1000;
+
+	else if (i > Ic[0]) {
+		if (Jc[1] < (y - deadzone)) {
+			pw_r = 1000;
+			pw_l = 1000;
+		}
+		else if (Jc[1] > (y + deadzone)) {
+			pw_r = 2000;
+			pw_l = 2000;
+		}
+		else {
+			pw_r = 1500;
+			pw_l = 1500;
+		}
 	}
-	else {
-		cout << "\nlocked in";
-		pw_r = 1500;
-		pw_l = 1500;
-	}
+
+	
 	
 
 
