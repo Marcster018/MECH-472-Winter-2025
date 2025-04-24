@@ -141,6 +141,56 @@ void opponent_track(int Ic[4], int Jc[4], int Oc[2], image &rgb, int &pw_r, int 
 
 }
 
+void find_obstacles(image& rgb, image& label, image&a,int nlabel,int Obs[2][2]) {
+	int k, i, j, width, size, height, l, 
+		area, max_area1=0, max_area2=0, max_label1=0, max_label2=0;
+	double io1=0, jo1=0, io2=0, jo2=0;
+	ibyte* p, * pc;
+	i2byte* pl, * plc;
+
+	width = rgb.width;
+	height = rgb.height;
+	size = width * height;
+
+	p = rgb.pdata;
+	pl = (i2byte*)label.pdata;
+
+	for (l = 1; l < nlabel; l++) {
+		area = 0;
+		for (k = 0; k < size; k++) {
+			plc = pl + k;
+
+			if (*plc == l) {
+				area++;
+			}
+		}
+		if (area > max_area1) {
+			max_area2 = max_area1;
+			max_label2 = max_label1;
+			io2 = io1;
+			jo2 = jo1;
+
+			max_area1 = area;
+			max_label1 = l;
+			centroid(a, label,l, io1, jo1);
+		}
+		else if (area > max_area2) {
+			max_area2 = area;
+			max_label2 = 2;
+			centroid(a, label, l, io2, jo2);
+		}
+	}
+
+	Obs[0][0] = (int)io1;
+	Obs[0][1] = (int)jo1;
+	Obs[1][0] = (int)io2;
+	Obs[1][1] = (int)jo2;
+	
+	draw_point_rgb(rgb, (int)io1, (int)jo1, 255, 0, 0);
+	draw_point_rgb(rgb, (int)io2, (int)jo2, 0, 255, 0);
+	//cout <<"\nA1 = "<< max_area1<<" l1 = "<<max_label1<<" io = "<<io1<<" jo1 = "<<jo1;
+}
+
 
 //Fred functions
 int auto_select_shape_by_size(i2byte& nlabel, image& label)
