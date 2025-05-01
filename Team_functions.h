@@ -14,6 +14,11 @@ void go_to(int Ic[4], int Jc[4], int& pw_l, int& pw_r, image& rgb,image &label, 
 
 //Fred functions
 int auto_select_shape_by_size(i2byte& nlabel, image& label)
+void find_hiding_position(robot_system* S1, double& hide_x, double& hide_y, double& hide_theta, double x_obs[], double y_obs[], int N_obs);
+void navigate_to_target(robot* defender, double hide_x, double hide_y, double x_obs[], double y_obs[], int N_obs, int& pw_l, int& pw_r);
+void dynamic_hide(robot* defender, robot_system* S1, double x_obs[], double y_obs[], int N_obs, int& pw_l, int& pw_r);
+bool is_robot_in_line_of_sight(robot* defender, robot_system* S1, double x_obs[], double y_obs[], int N_obs);
+double estimate_radius_from_image(image& rgb_obstacle, double IC, double JC);
 
 //marc functions
 
