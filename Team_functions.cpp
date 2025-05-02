@@ -712,18 +712,23 @@ void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
                 // Something is directly ahead!
                 cout << "\n[Vision Collision] Label detected at (" << i << ", " << j << ") = " << label_val;
 
-                int delta_l = abs(pw_l - 1500);
-                int delta_r = abs(pw_r - 1500);
-				
-                if (delta_l > delta_r) {
-                    pw_l -= 200;
-                    pw_r += 100;
-                } else {
-                    pw_l += 100;
-                    pw_r -= 200;
-                }
+        	int delta_l = abs(pw_l - 1500);
+		int delta_r = abs(pw_r - 1500);
 
-                return;
+                if (((delta_l > delta_r) && (pw_l > pw_r)) || ((delta_l < delta_r) && (pw_l < pw_r))){
+                    // turning left -> turn harder left
+                    pw_l = 2000; // backwards left
+                    pw_r = 2000; // forward right
+                } else if (((delta_l > delta_r) && (pw_l < pw_r)) || ((delta_l < delta_r) && (pw_l > pw_r))){
+                    // turning right -> turn harder right
+                    pw_l = 1000; // forward left
+                    pw_r = 1000; // backwards right
+                } else if( (delta_l == delta_r) && (pw_l != pw_r) && ( pw_l < 1500 && pw_r > 1500) ){
+		    // if velocity was forward -> turns backwards
+		    pw_l = 2000; // backwards left
+		    pw_r = 1000; // backwards right 
+		}
+		return;
             }
         }
     }
