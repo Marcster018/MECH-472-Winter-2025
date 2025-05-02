@@ -350,7 +350,7 @@ void go_to(int Ic[4], int Jc[4], int& pw_l, int& pw_r, image& rgb,image &label, 
 			pw_r = 1500;
 		}
 	}
-
+Collision_Detection(my_robot_label,pw_l,pw_r);
 }
 
 
@@ -669,6 +669,8 @@ void dynamic_hide(robot* defender, robot_system* S1, double x_obs[], double y_ob
 	//navigate_to_target(defender, hide_x, hide_y, x_obs, y_obs, N_obs, pw_l, pw_r);
 	last_opp_x = curr_opp_x;
 	last_opp_y = curr_opp_y;
+	
+	Collision_Detection(my_robot_label,pw_l,pw_r);
 }
 
 
@@ -677,26 +679,26 @@ void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
     const int width = label.width;
     const int height = label.height;
 	
-// Define a scan zone in front of the robot
+    // Define a scan zone in front of the robot
     const int safe_distance_px = 30;
     const int scan_width = 5;
 	
-// Get robot's current position and heading
+	// Get robot's current position and heading
     double theta = my_robot->x[1];
     double rx = my_robot->x[2];
     double ry = my_robot->x[3];
 
     i2byte* pl = (i2byte*)label.pdata;
 
-// project forward points in a fan shape
-// check within range of 10 to 30 pixels if there are any objects in the way
+    // project forward points in a fan shape
+    // check within range of 10 to 30 pixels if there are any objects in the way
     for (int r = 10; r <= safe_distance_px; r += 2) {
         for (int offset = -scan_width; offset <= scan_width; offset++) {
             double angle = theta + offset * 0.05;
             int i = (int)(rx + r * cos(angle));
             int j = (int)(ry + r * sin(angle));
 
-//check for screen boundaries
+            //check for screen boundaries
             if (i < 0 || i >= width || j < 0 || j >= height) {
                 // Near screen edge: back up and turn slightly
                 pw_l = 1300;
@@ -704,7 +706,7 @@ void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
                 return;
             }
 
-// check for objectts
+            // check for objectts
             int label_val = pl[j * width + i];
             if (label_val != 0) {
                 // Something is directly ahead!
