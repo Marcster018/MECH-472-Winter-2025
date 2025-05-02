@@ -21,7 +21,7 @@ bool is_robot_in_line_of_sight(robot* defender, robot_system* S1, double x_obs[]
 double estimate_radius_from_image(image& rgb_obstacle, double IC, double JC);
 
 //marc functions
-void collision(robot* my_robot, image& label, int& pw_l, int& pw_r)
+void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r)
 
 //Jacob Functions
 void Get_Object_RGB_Colour(image& rgb, int number_labels, vector<array<int, 5>>& Pos_RGB)
