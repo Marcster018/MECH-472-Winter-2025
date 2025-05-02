@@ -671,7 +671,61 @@ void dynamic_hide(robot* defender, robot_system* S1, double x_obs[], double y_ob
 	last_opp_y = curr_opp_y;
 }
 
-//marc functions
+
+//Marc functions
+void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
+    const int width = label.width;
+    const int height = label.height;
+	
+// Define a scan zone in front of the robot
+    const int safe_distance_px = 30;
+    const int scan_width = 5;
+	
+// Get robot's current position and heading
+    double theta = my_robot->x[1];
+    double rx = my_robot->x[2];
+    double ry = my_robot->x[3];
+
+    i2byte* pl = (i2byte*)label.pdata;
+
+// project forward points in a fan shape
+// check within range of 10 to 30 pixels if there are any objects in the way
+    for (int r = 10; r <= safe_distance_px; r += 2) {
+        for (int offset = -scan_width; offset <= scan_width; offset++) {
+            double angle = theta + offset * 0.05;
+            int i = (int)(rx + r * cos(angle));
+            int j = (int)(ry + r * sin(angle));
+
+//check for screen boundaries
+            if (i < 0 || i >= width || j < 0 || j >= height) {
+                // Near screen edge: back up and turn slightly
+                pw_l = 1300;
+                pw_r = 1700;
+                return;
+            }
+
+// check for objectts
+            int label_val = pl[j * width + i];
+            if (label_val != 0) {
+                // Something is directly ahead!
+                cout << "\n[Vision Collision] Label detected at (" << i << ", " << j << ") = " << label_val;
+
+                int delta_l = abs(pw_l - 1500);
+                int delta_r = abs(pw_r - 1500);
+				
+                if (delta_l > delta_r) {
+                    pw_l -= 200;
+                    pw_r += 100;
+                } else {
+                    pw_l += 100;
+                    pw_r -= 200;
+                }
+
+                return;
+            }
+        }
+    }
+}
 
 
 //Jacob Functions
