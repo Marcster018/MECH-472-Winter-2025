@@ -15,7 +15,7 @@ void find_hollow_circles(int& nlabels, image& rgb, image& label, image& a, image
 
 	p = rgb0.pdata;
 
-
+	//go through all labels and check if there centroid are on a backgound
 	for (int label_num = 1; label_num <= nlabels; label_num++) {
 
 		centroid(a, label, label_num, ic, jc);
@@ -28,7 +28,7 @@ void find_hollow_circles(int& nlabels, image& rgb, image& label, image& a, image
 		G = *(pc + 1);
 		R = *(pc + 2);
 
-
+		//if centroid on a backgound check the color on the orignal image to associate properly in vector Ic,Jc
 		if (*plc == 0) {
 
 			//green
@@ -63,6 +63,7 @@ void find_hollow_circles(int& nlabels, image& rgb, image& label, image& a, image
 void clean_up(image& rgb, image& a) {
 	int width, height;
 	image b;
+	ibyte* p;
 
 	width = rgb.width;
 	height = rgb.height;
@@ -72,9 +73,9 @@ void clean_up(image& rgb, image& a) {
 	b.height = height;
 
 	allocate_image(b);
-
+	
 	copy(rgb, a);
-	threshold(a, b, 70);
+	threshold(a, b,	70);
 	copy(b, a);
 	lowpass_filter(a, b);
 	copy(b, a);
@@ -92,6 +93,8 @@ void clean_up(image& rgb, image& a) {
 }
 
 void find_obstacles(image& rgb, image& label, image& a, int nlabel, vector<int> &OL) {
+	//the function calculates the radius in 8 directions (every 45 degrees) and checks the diff in the
+	//min and max value for each label
 	int i, j, k, l, height, width, size;
 	double ic, jc;
 	i2byte* pl;
@@ -101,46 +104,49 @@ void find_obstacles(image& rgb, image& label, image& a, int nlabel, vector<int> 
 	width = rgb.width;
 	size = width * height;
 
+	//different directions
 	int dx[8] = { 1, 1, 0, -1, -1, -1, 0, 1 };
 	int dy[8] = { 0, -1, -1, -1, 0, 1, 1, 1 };
 
-	float dmin1 = 1e9, dmin2 = 1e9;
-	int label1 = 0, label2 = 0;
-
 	for (l = 1; l <= nlabel; l++) {
-		centroid(a, label, l, ic, jc);
-		float R[8] = { 0 };
+		centroid(a, label, l, ic, jc); //find centroid 
+		float R[8] = { 0 };//make Radius vector all 0s
 
-		for (int d = 0; d < 8; d++) {
+		for (int d = 0; d < 8; d++) {//from the centroid go in all 8 directions
 			i = ic;
 			j = jc;
-			while (true) {
+			while (true) { //calculates the number of pixels that arent backgrounds in a specific direction
 				i += dx[d];
 				j += dy[d];
-				if (i < 0 || j < 0 || i >= width || j >= height) break;
+				if (i < 0 || j < 0 || i >= width || j >= height) break; //if pixels is out of bounds
 
 				k = i + j * width;
-				if (pl[k] != l) break;
+				if (pl[k] != l) break; //if pixel doesnt match the correct label
 
 				float x = i - ic;
 				float y = j - jc;
-				R[d] = sqrt(x * x + y * y);
+				R[d] = sqrt(x * x + y * y); //finds the magnitude of the x and y direction
 			}
 		}
 
-		float min = R[0], max = R[0];
-		for (int d = 1; d < 8; d++) {
+		float min = R[0], max = R[0]; //sets initial values
+		for (int d = 1; d < 8; d++) { //checks each value in array to find max and min
 			if (R[d] < min) min = R[d];
 			if (R[d] > max) max = R[d];
 		}
 
 		float diff = max - min;
-		if (diff < 2 && diff>0) OL.push_back(l);
+		if (diff < 3 && diff>0) {//by trial and error below 3 were the obstacles for diff
+			OL.push_back(l);
+			centroid(a, label, l, ic, jc);
+			draw_point_rgb(rgb, ic, jc, 255, 0, 0);
+		}
 	}
 }
 
 void opponent_track(int Ic[4], int Jc[4], image& rgb, image& label, int& pw_r, int& pw_l) {
 
+	//center of opponent
 	int id = (Ic[3] + Ic[2]) / 2;
 	int jd = (Jc[3] + Jc[2]) / 2;
 
@@ -170,9 +176,8 @@ void opponent_track(int Ic[4], int Jc[4], image& rgb, image& label, int& pw_r, i
 		m = (float)dy / (float)dx;
 		b = Jc[0] - Ic[0] * m;
 	}
-	//cout << "\ny= " << m << " + " << b;
 
-	//want to check if the red dot Ic[1], Jc[1] is bellow or above the line
+	//want to check if the red dot Ic[1], Jc[1] is bellow or above the line than turn the robot accordingly
 	float deadzone = 10;
 	y = m * Ic[1] + b;
 
@@ -207,7 +212,7 @@ void opponent_track(int Ic[4], int Jc[4], image& rgb, image& label, int& pw_r, i
 	}
 
 	//drawing point
-	draw_point_rgb(rgb, id, jd, 255, 0, 255);
+	draw_point_rgb(rgb, id, jd, 255, 0, 255); //draw point of where the robot looks
 
 }
 
@@ -215,7 +220,7 @@ void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image
 	int width = rgb.width;
 	int height = rgb.height;
 	int size = width * height;
-	bool obstruction = false;
+	bool obstruction = false; //different bool so it is only updated at the end
 
 	// Pointer to label data
 	i2byte* pl = (i2byte*)label.pdata;
@@ -249,6 +254,7 @@ void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image
 		float b = cr_y - cr_x * m;
 		//line drawing
 
+		//check if the pixels on the line have the same label as the obstacles
 		for (int k = 0; k < size; k++) {
 			int i = k % width;
 			int j = (k - i) / width;
@@ -335,7 +341,7 @@ void attack(image& rgb,image&rgb0, image&a, image& label, int &pw_r, int &pw_l) 
 	bool detected = false;
 	find_hollow_circles(nlabel, rgb, label, a, rgb0, Ic, Jc);
 	find_obstacles(rgb, label, a, nlabel, OL);
-	detect_obstruction(Ic, Jc, OL, rgb, label, detected);
+	//detect_obstruction(Ic, Jc, OL, rgb, label, detected);
 	cout << "\n" << detected;
 
 	
