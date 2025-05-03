@@ -1,10 +1,13 @@
 
-//Our teams'functions
+//Our Team's Functions
 
-//mech 472 functions
+//Standard Functions
 #include <vector>
 #include <array>
 #include <iostream>
+#include <fstream>
+#include <Windows.h>
+#include <cstdio>
 
 //MECH 472 Libraries
 #include "image_transfer.h"
@@ -12,7 +15,67 @@
 #include "robot.h"
 #include "vision_simulation.h"
 
+#include "Team_functions.h"
 using namespace std;
+#define KEY(c) ( GetAsyncKeyState((int)(c)) & (SHORT)0x8000 )
+
+//Attack Function
+void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser) {
+	
+	int height, width, nlabelBW, nlabelColour;
+	static vector <array <int, 5>> Bulk_Data;
+	static int Robot_Data[5];
+	static int Opposition_Data[5];
+	static vector <array <int, 5>> Obstacle_Data;
+	bool detected = false;
+	image ProcessingImage, LabelImageBW, LabelImageColour;
+
+	ProcessingImage.type = RGB_IMAGE;
+	ProcessingImage.width = rgb.width;
+	ProcessingImage.height = rgb.height;
+
+	LabelImageBW.type = LABEL_IMAGE;
+	LabelImageBW.width = rgb.width;
+	LabelImageBW.height = rgb.height;
+
+	LabelImageColour.type = LABEL_IMAGE;
+	LabelImageColour.width = rgb.width;
+	LabelImageColour.height = rgb.height;
+
+	allocate_image(LabelImageBW);
+	allocate_image(LabelImageColour);
+	allocate_image(ProcessingImage);
+
+	copy(rgb, ProcessingImage);
+
+	Process_Image(ProcessingImage, LabelImageBW, LabelImageColour, nlabelBW, nlabelColour);
+
+	//Get_Image_Data(rgb,LabelImageBW,LabelImageColour, nlabelBW,nlabelColour,Bulk_Data);
+
+	//ClassifyData();
+
+	//detect_obstruction(Ic, Jc, ObsLabel, rgb, label, detected);
+
+	/*
+	if (detected == false) {
+		cout << "\nTracking opponent.";
+		opponent_track(Ic, Jc, rgb, label, pw_r, pw_l);
+	}
+	else {
+		pw_l = 1350;
+		pw_r = 1750;
+		//here the patrol function should go
+	}
+	*/
+	pause();
+
+	free_image(LabelImageBW);
+	free_image(LabelImageColour);
+	free_image(ProcessingImage);
+}
+//Defend Function
+
+
 
 //Anthony functions
 void find_hollow_circles(int& nlabels, image& rgb, image& label, image&a, image& rgb0, int Ic[4], int Jc[4]) {
@@ -179,7 +242,7 @@ void find_obstacles(image& rgb, image& label, image& a, int nlabel, int ObsLabel
 	}
 }
 
-/*void opponent_track(int Ic[4], int Jc[4], image& rgb, image& label, int& pw_r, int& pw_l) {
+void opponent_track(int Ic[4], int Jc[4], image& rgb, image& label, int& pw_r, int& pw_l) {
 
 	int id = (Ic[3] + Ic[2]) / 2;
 	int jd = (Jc[3] + Jc[2]) / 2;
@@ -250,7 +313,6 @@ void find_obstacles(image& rgb, image& label, image& a, int nlabel, int ObsLabel
 	draw_point_rgb(rgb, id, jd, 255, 0, 255);
 
 }
-*/
 
 void detect_obstruction(int Ic[4], int Jc[4], int ObsLabel[2], image& rgb, image& label, bool &detected) {
 	int width = rgb.width;
@@ -752,7 +814,162 @@ void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
 
 //Jacob Functions
 
-void Get_Object_RGB_Colour(image& rgb, int number_labels, vector<array<int, 5>>& Pos_RGB) {
+
+static void BWProcessing(image& InputImage, image& OutputImage) {
+	int width, height, Threshold;
+	image TempImageA, TempImageB, View;
+
+	width = InputImage.width;
+	height = InputImage.height;
+
+	TempImageA.type = GREY_IMAGE;
+	TempImageA.width = width;
+	TempImageA.height = height;
+
+	TempImageB.type = GREY_IMAGE;
+	TempImageB.width = width;
+	TempImageB.height = height;
+
+	View.type = RGB_IMAGE;
+	View.width = width;
+	View.height = height;
+
+	Threshold = 75;
+
+	allocate_image(TempImageA);
+	allocate_image(TempImageB);
+	allocate_image(View);
+
+	copy(InputImage, TempImageA);
+	scale(TempImageA, TempImageB);
+	lowpass_filter(TempImageB, TempImageA);
+
+	/*
+	//Make a Histogram
+	int nhist, j;
+	double hist[255], hmin, hmax, x;
+
+	nhist = 60;
+	histogram(TempImageA, hist, nhist, hmin, hmax);
+	ofstream fout("BW_Hist.csv");
+	for (j = 0; j < nhist; j++) {
+		x = hmin + (hmax - hmin) / nhist * j;
+		fout << x << "," << hist[j] << "\n";
+	}
+	fout.close();
+	*/
+
+	threshold(TempImageA, TempImageB, Threshold);
+	invert(TempImageB, TempImageA);
+	erode(TempImageA, TempImageB);
+	erode(TempImageB, TempImageA);
+	dialate(TempImageA, TempImageB);
+	dialate(TempImageB, TempImageA);
+	
+	/*
+	cout << "\nImage processing complete. BW objects found";
+	copy(TempImageA, View);
+	save_rgb_image("BWProcessedImage.bmp", View);  //For troubleshooting
+	pause();
+	*/
+
+	copy(TempImageA, OutputImage);
+
+	free_image(TempImageA);
+	free_image(TempImageB);
+	free_image(View);
+}
+
+static void ColourProcessing(image& InputImage, image& OutputImage) {
+	int width, height, Threshold;
+	image TempImageA, TempImageB, View;
+
+	width = InputImage.width;
+	height = InputImage.height;
+
+	TempImageA.type = GREY_IMAGE;
+	TempImageA.width = width;
+	TempImageA.height = height;
+
+	TempImageB.type = GREY_IMAGE;
+	TempImageB.width = width;
+	TempImageB.height = height;
+
+	View.type = RGB_IMAGE;
+	View.width = width;
+	View.height = height;
+
+	Threshold = 237;
+
+	allocate_image(TempImageA);
+	allocate_image(TempImageB);
+	allocate_image(View);
+
+	copy(InputImage, TempImageA);
+	scale(TempImageA, TempImageB);
+	lowpass_filter(TempImageB, TempImageA);
+
+	cout << "\nHistogram created. Greyscale image";
+	copy(TempImageA, View);
+	save_rgb_image("ColourGreyscaleImage.bmp", View);  //For troubleshooting
+	pause();
+
+	//Make a Histogram
+	int nhist, j;
+	double hist[255], hmin, hmax, x;
+
+	nhist = 60;
+	histogram(TempImageA, hist, nhist, hmin, hmax);
+	ofstream fout("Colour_Hist.csv");
+	for (j = 0; j < nhist; j++) {
+		x = hmin + (hmax - hmin) / nhist * j;
+		fout << x << "," << hist[j] << "\n";
+	}
+	fout.close();
+	highpass_filter
+		
+	threshold(TempImageA, TempImageB, Threshold);
+	invert(TempImageB, TempImageA);
+	erode(TempImageA, TempImageB);
+	erode(TempImageB, TempImageA);
+	dialate(TempImageA, TempImageB);
+	dialate(TempImageB, TempImageA);
+
+	cout << "\nImage processing complete. Colour objects Found";
+	copy(TempImageA, View);
+	save_rgb_image("ColourProcessedImage.bmp", View);  //For troubleshooting
+	pause();
+
+	copy(TempImageA, OutputImage);
+
+	free_image(TempImageA);
+	free_image(TempImageB);
+	free_image(View);
+}
+
+//Takes an RGB image and returns a correctly labeled image
+static void Process_Image(image& InputImage, image& LabelImageBW, image& LabelImageColour, int& nlabelBW, int&nlabelColour) {
+
+	image TempImage;
+
+	TempImage.type = GREY_IMAGE;
+	TempImage.width = InputImage.width;
+	TempImage.height = InputImage.height;
+
+	allocate_image(TempImage);
+
+	BWProcessing(InputImage, TempImage);
+	//label_image(TempImage, LabelImageBW, nlabelBW);
+
+	ColourProcessing(InputImage, TempImage);
+	//label_image(TempImage, LabelImageColour, nlabelColour);
+
+	free_image(TempImage);
+}
+
+
+//Takes an RGB image and a labeled image and returns data on each object in the format [Ic, Jc, theta, H, S, V]
+static void Get_Image_Data(image& rgb, image& LabelImageBW, image& LabelImageColour, int nlabelBW,int nlabelColour, vector<array<int, 5>>& Bulk_Data) {
 
 	//Create Local Variables
 	int i, j, Pixel_Number, k;
@@ -764,21 +981,20 @@ void Get_Object_RGB_Colour(image& rgb, int number_labels, vector<array<int, 5>>&
 	width = rgb.width;
 	p = rgb.pdata;
 
-	cout << "\nUsing the following format: [Ic, Jc, R, G, B]";
 	//Identify Colour of Each Object
-	for (k = 1; k <= number_labels; k++) {
+	for (k = 1; k <= nlabelBW; k++) {
 		for (i = 0; i < 3; i++) {
 
-			Pixel_Number = (Pos_RGB[k][1] * width) + Pos_RGB[k][0];
+			Pixel_Number = (Bulk_Data[k][1] * width) + Bulk_Data[k][0];
 			j = i + 2;
-			Pos_RGB[k][j] = p[3 * Pixel_Number + i];
+			Bulk_Data[k][j] = p[3 * Pixel_Number + i];
 		}
-		cout << "\n\nObject " << k << " has the follwing position and RGB code:";
-		cout << "\nIc= " << (int)Pos_RGB[k][0];
-		cout << "\nJc= " << (int)Pos_RGB[k][1];
-		cout << "\nR= " << (int)Pos_RGB[k][4];
-		cout << "\nG= " << (int)Pos_RGB[k][3];
-		cout << "\nB= " << (int)Pos_RGB[k][2];
-		draw_point_rgb(rgb, (int)Pos_RGB[k][0], (int)Pos_RGB[k][1], 255, 255, 255);
 	}
+}
+
+static void Classify_Data() {
+	/*
+	find_hollow_circles(nlabel, rgb, label, a, rgb0, Ic, Jc);
+	find_obstacles(rgb, label, a, nlabel, ObsLabel);
+	*/
 }
