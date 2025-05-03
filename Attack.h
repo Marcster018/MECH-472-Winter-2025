@@ -91,7 +91,7 @@ void clean_up(image& rgb, image& a) {
 	free_image(b);
 }
 
-void find_obstacles(image& rgb, image& label, image& a, int nlabel, int ObsLabel[2]) {
+void find_obstacles(image& rgb, image& label, image& a, int nlabel, vector<int> &OL) {
 	int i, j, k, l, height, width, size;
 	double ic, jc;
 	i2byte* pl;
@@ -135,30 +135,7 @@ void find_obstacles(image& rgb, image& label, image& a, int nlabel, int ObsLabel
 		}
 
 		float diff = max - min;
-
-		if (diff > 0) {
-			if (diff < dmin1) {
-				dmin2 = dmin1;
-				label2 = label1;
-				dmin1 = diff;
-				label1 = l;
-			}
-			else if (diff < dmin2) {
-				dmin2 = diff;
-				label2 = l;
-			}
-		}
-	}
-
-	if (label1 != -1) {
-		ObsLabel[0] = label1;
-		centroid(a, label, label1, ic, jc);
-		//draw_point_rgb(rgb, (int)ic, (int)jc, 255, 0, 0);
-	}
-	if (label2 != -1) {
-		ObsLabel[1] = label2;
-		centroid(a, label, label2, ic, jc);
-		//draw_point_rgb(rgb, (int)ic, (int)jc, 255, 0, 0);
+		if (diff < 2 && diff>0) OL.push_back(l);
 	}
 }
 
@@ -234,7 +211,7 @@ void opponent_track(int Ic[4], int Jc[4], image& rgb, image& label, int& pw_r, i
 
 }
 
-void detect_obstruction(int Ic[4], int Jc[4], int ObsLabel[2], image& rgb, image& label, bool& detected) {
+void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image& label, bool& detected) {
 	int width = rgb.width;
 	int height = rgb.height;
 	int size = width * height;
@@ -261,7 +238,9 @@ void detect_obstruction(int Ic[4], int Jc[4], int ObsLabel[2], image& rgb, image
 			int j = (k - i) / width;
 			if (abs(i - (int)cr_x) <= 1) {
 				draw_point_rgb(rgb, i, j, 255, 0, 0);
-				if (pl[k] == ObsLabel[0] || pl[k] == ObsLabel[1]) obstruction = true;
+				for (int a : OL) {
+					if (pl[k] == a) obstruction = true;
+				}
 			}
 		}
 	}
@@ -276,7 +255,9 @@ void detect_obstruction(int Ic[4], int Jc[4], int ObsLabel[2], image& rgb, image
 			float y = i * m + b;
 			if (abs(j - (int)y) <= 1) {
 				draw_point_rgb(rgb, i, j, 255, 0, 0);
-				if (pl[k] == ObsLabel[0] || pl[k] == ObsLabel[1]) obstruction = true;
+				for (int a : OL) {
+					if (pl[k] == a) obstruction = true;
+				}
 			}
 		}
 	}
@@ -343,22 +324,26 @@ void go_to(int Ic[4], int Jc[4], int& pw_l, int& pw_r, image& rgb, image& label,
 	}
 
 }
-//make sure rgb,rgb0,label,a,b are properly defined in the main
-void attack(image& rgb,image&rgb0, image&a,image&b, image& label, int &pw_r, int &pw_l) {
-	int height, width, nlabel, Ic[4], Jc[4], Oc[2], Obs[2][2], ObsLabel[2];
+
+void attack(image& rgb,image&rgb0, image&a, image& label, int &pw_r, int &pw_l) {
+	int nlabel, Ic[4], Jc[4];
+	vector<int> OL;
 
 	copy(rgb, rgb0);
 	clean_up(rgb, a);
 	label_image(a, label, nlabel);
 	bool detected = false;
 	find_hollow_circles(nlabel, rgb, label, a, rgb0, Ic, Jc);
-	find_obstacles(rgb, label, a, nlabel, ObsLabel);
-	detect_obstruction(Ic, Jc, ObsLabel, rgb, label, detected);
+	find_obstacles(rgb, label, a, nlabel, OL);
+	detect_obstruction(Ic, Jc, OL, rgb, label, detected);
+	cout << "\n" << detected;
 
+	
 	if (detected == false) opponent_track(Ic, Jc, rgb, label, pw_r, pw_l);
 	else {
 		pw_l = 1350;
 		pw_r = 1750;
 		//here the patrol function should go
 	}
+	
 }
