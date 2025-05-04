@@ -55,7 +55,7 @@ void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser
 
 	Classify_Data(rgb, LabelImageBW, LabelImageColour, nlabelBW, nlabelColour, Bulk_Data, Robot_Data, Opponent_Data, Obstacle_Data, Player);
 
-	Classify_Data_Troubleshooting(rgb, Robot_Data, Opponent_Data, Obstacle_Data);
+	//Classify_Data_Troubleshooting(rgb, Robot_Data, Opponent_Data, Obstacle_Data);
 
 	//detect_obstruction(Ic, Jc, ObsLabel, rgb, label, detected);
 

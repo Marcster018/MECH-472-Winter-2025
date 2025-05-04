@@ -1,10 +1,4 @@
-﻿  robot_A_offence.cpp
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.h(37,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
-  (compiling source file 'robot_A_offence.cpp')
-  
-  robot.cpp
-  shared_memory.cpp
-  Example.cpp
+﻿  Example.cpp
 C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.h(37,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
   (compiling source file 'Example.cpp')
   
@@ -54,15 +48,9 @@ C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functi
 C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1212,16): warning C4018: '<': signed/unsigned mismatch
 C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1216,16): warning C4018: '<': signed/unsigned mismatch
 C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1220,16): warning C4018: '<': signed/unsigned mismatch
-  timer.cpp
-  update_simulation.cpp
-  vision.cpp
-  vision_simulation.cpp
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\vision_simulation.cpp(495,24): warning C4101: 'q4': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\vision_simulation.cpp(495,14): warning C4101: 'q2': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\vision_simulation.cpp(495,29): warning C4101: 'q5': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\vision_simulation.cpp(495,19): warning C4101: 'q3': unreferenced local variable
+  robot_A_offence.cpp
+C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.h(37,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
+  (compiling source file 'robot_A_offence.cpp')
+  
   Generating Code...
-image_transfer.lib(image_transfer.obj) : warning LNK4099: PDB '' was not found with 'image_transfer.lib(image_transfer.obj)' or at ''; linking object as if no debug info
-image_transfer.lib(Video_IO.obj) : warning LNK4099: PDB '' was not found with 'image_transfer.lib(Video_IO.obj)' or at ''; linking object as if no debug info
   robot_A_offence.vcxproj -> C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Debug\robot_A_offence.exe

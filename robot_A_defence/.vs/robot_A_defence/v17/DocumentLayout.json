@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_defence.vcxproj|C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\robot_A_defence.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_defence.vcxproj|solutionrelative:robot_A_defence.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "robot_A_defence.cpp",
+              "DocumentMoniker": "C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\robot_A_defence.cpp",
+              "RelativeDocumentMoniker": "robot_A_defence.cpp",
+              "ToolTip": "C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\robot_A_defence.cpp",
+              "RelativeToolTip": "robot_A_defence.cpp",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAIwEsAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-04T15:21:30.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a0c5197d-0ac7-4b63-97cd-8872a789d233}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
