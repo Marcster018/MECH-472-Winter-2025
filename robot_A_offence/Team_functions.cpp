@@ -16,12 +16,13 @@
 #include "vision_simulation.h"
 
 #include "Team_functions.h"
+
 using namespace std;
 #define KEY(c) ( GetAsyncKeyState((int)(c)) & (SHORT)0x8000 )
 
 //Attack Function
 void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser) {
-	
+
 	int height, width, nlabelBW, nlabelColour;
 	static vector <array <int, 5>> Bulk_Data;
 	static int Robot_Data[5];
@@ -73,9 +74,6 @@ void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser
 	free_image(LabelImageColour);
 	free_image(ProcessingImage);
 }
-//Defend Function
-
-
 
 //Anthony functions
 void find_hollow_circles(int& nlabels, image& rgb, image& label, image&a, image& rgb0, int Ic[4], int Jc[4]) {
@@ -242,7 +240,7 @@ void find_obstacles(image& rgb, image& label, image& a, int nlabel, int ObsLabel
 	}
 }
 
-void opponent_track(int Ic[4], int Jc[4], image& rgb, image& label, int& pw_r, int& pw_l) {
+void opponent_track(int Ic[4], int Jc[4], image& rgb,image &label, int& pw_r, int& pw_l) {
 
 	int id = (Ic[3] + Ic[2]) / 2;
 	int jd = (Jc[3] + Jc[2]) / 2;
@@ -421,20 +419,16 @@ void go_to(int Ic[4], int Jc[4], int& pw_l, int& pw_r, image& rgb,image &label, 
 			pw_r = 1500;
 		}
 	}
-//Collision_Detection(my_robot,label, pw_l,pw_r);
+Collision_Detection(my_robot_label,pw_l,pw_r);
 }
 
 
 
 //Fred functions
-
-/*
-
+int auto_select_shape_by_size(i2byte& nlabel, image& label)
 // select an object from a binary image based on its area
 // use instead of the select_object function in the
 // find_object function
-int auto_select_shape_by_size(i2byte& nlabel, image& label)
-
 {
 #define MAX_LABELS 256
 	int labelAreas[MAX_LABELS] = { 0 };
@@ -442,8 +436,7 @@ int auto_select_shape_by_size(i2byte& nlabel, image& label)
 	i2byte* pl;
 
 	acquire_image_sim(rgb0);
-	label_object (tvalue);
-
+	label_objects(tvalue);
 
 	pl = (i2byte*)label.pdata;
 
@@ -468,19 +461,58 @@ int auto_select_shape_by_size(i2byte& nlabel, image& label)
 	return 0; // no errors
 }
 
-double estimate_radius_from_image(image& rgb_obstacle, double IC, double JC) {
+//my functions also use the find_hollow_circles and clean_up functions of Anthony
+
+int find_obstacles(image& rgb, image& label, image& a, int obs_x[], int obs_y[], int max_obs) {
+	const int MAX_LABELS = 255;
+	int labelAreas[MAX_LABELS] = { 0 };
+	int n_obstacles = 0;
+	i2byte* pl;
+
+	pl = (i2byte*)label.pdata;
+
+
+	//measuring the area (amount of pixels) of a shape
+	for (int y = 0; y < label.height; y++) {
+		for (int x = 0; x < label.width; x++) {
+			int labelVal = *(pl + y * label.width + x); //get label at pixel (x,y)
+			if (labelVal > 0 && labelVal < MAX_LABELS) {
+				labelAreas[labelVal]++; //increment that label's area count
+			}
+			
+		}
+	}
+	
+
+	for (int label_id = 1; label_id <= 255; label_id++) {
+		double ic, ij;
+		centroid(a, label, label_id, ic, ij);
+		if (labelAreas[label_id] > 2800) {
+			//cout << "\nlabel = " << label_id;
+			if (n_obstacles < max_obs) {
+				obs_x[n_obstacles] = (int)ic;
+				obs_y[n_obstacles] = (int)ij;
+				n_obstacles++;
+			}
+		}
+	}
+	//cout << "\n_obs = " << n_obstacles;
+	return n_obstacles;
+}
+
+double estimate_radius_from_image(image& label, double IC, double JC) {
 	double radius, radius_max, radius_div, arc, arc_max, arc_div;
 	int i, j, width, height, k;
 	const double PI = 3.14159;
 	ibyte* pc;
 	ibyte r, g, b;
 
-	pc = rgb_obstacle.pdata;
+	pc = label.pdata;
 	radius_max = 100;
 	radius_div = 1;
 	arc_div = 1;
-	width = rgb_obstacle.width;
-	height = rgb_obstacle.height;
+	width = label.width;
+	height = label.height;
 
 
 	for (radius = 1; radius < radius_max; radius += radius_div) {
@@ -510,50 +542,37 @@ double estimate_radius_from_image(image& rgb_obstacle, double IC, double JC) {
 	return radius_max; // max radius if full disk
 }
 
-bool is_robot_in_line_of_sight(robot* defender, robot_system* S1, double x_obs[], double y_obs[], int N_obs) {
-	double defender_x = defender->x[2];
-	double defender_y = defender->x[3];
-	double opponent_x = S1->P[2]->x[2];
-	double opponent_y = S1->P[2]->x[3];
-	double dx, dy, fx, fy, obs_x, obs_y, a, b, c, sqrt_quad, t1, t2;
-	double angle_to_robot, opponent_angle, relative_angle;
-	const double PI = 3.14159265358979323846;
+bool is_robot_in_line_of_sight(int defender_x, int defender_y, int opponent_x, int opponent_y, image& rgb, image& label, image& a) {
+	const int MAX_OBS = 100;
+	int obs_x[MAX_OBS], obs_y[MAX_OBS];
+	int num_obs = find_obstacles(rgb, label, a, obs_x, obs_y, MAX_OBS);
+
+	double dx, dy, fx, fy, a_, b_, c, sqrt_quad, t1, t2;
+
 
 	dx = defender_x - opponent_x;
 	dy = defender_y - opponent_y;
 	
-	// Compute relative angle between defender direction and opponent
-	angle_to_robot = atan2(dy, dx);
-	opponent_angle = defender->x[1];
-	//while (robot_angle > PI) robot_angle -= 2 * PI;
-	//while (robot_angle < -PI) robot_angle += 2 * PI;
-	relative_angle = angle_to_robot - opponent_angle;
 
-	// Normalize the angle to be between -pi and pi
-	while (relative_angle > PI) relative_angle -= 2 * PI;
-	while (relative_angle < -PI) relative_angle += 2 * PI;
 
 	//check if the opponent line of sight is obstructed by an obstacle
-	for (int i = 0; i < N_obs; i++) {
-		obs_x = x_obs[i];
-		obs_y = y_obs[i];
-		fx = obs_x - opponent_x;
-		fy = obs_y - opponent_y;
+	for (int i = 0; i < num_obs; i++) {
+		fx = obs_x[i] - opponent_x;
+		fy = obs_y[i] - opponent_y;
 
-		double radius = estimate_radius_from_image(rgb_obstacle[i], x_obs[i], y_obs[i]);
+		double radius = estimate_radius_from_image(rgb, obs_x[i], obs_y[i]);
 
-		a = dx * dx + dy * dy;
-		b = 2 * (fx * dx + fy * dy);
+		a_ = dx * dx + dy * dy;
+		b_ = 2 * (fx * dx + fy * dy);
 		c = fx * fx + fy * fy - radius * radius;
 
-		sqrt_quad = b * b - 4 * a * c;
+		sqrt_quad = b_ * b_ - 4 * a_ * c;
 
 		if (sqrt_quad >= 0) {
 			
 			sqrt_quad = sqrt(sqrt_quad);
-			t1 = (-b - sqrt_quad) / (2 * a);
-			t2 = (-b + sqrt_quad) / (2 * a);
-			//cout << "\nt1 = " << t1 <<"  t2 = "<< t2;
+			t1 = (-b_ - sqrt_quad) / (2 * a_);
+			t2 = (-b_ + sqrt_quad) / (2 * a_);
 			// If the line from robot to opponent intersects this obstacle
 			if ((t1 >= 0 && t1<= 1) || (t2 >= 0 && t2 <= 1)) {
 				return false;  // Line of sight is blocked
@@ -562,51 +581,31 @@ bool is_robot_in_line_of_sight(robot* defender, robot_system* S1, double x_obs[]
 		}
 
 	}
-	//cout << "\n angle = " << relative_angle;
-	// If no obstacle blocks the view, check if robot is in opponent's field of view
-	if (fabs(relative_angle) < (PI / 2)) { 
-		return true; // The robot is in the opponent's line of sight
-	}
-	
-	return false; // The robot is not in the opponent's line of sight
+	return true;
 }
 
-void find_hiding_position(robot_system* S1, double& hide_x, double& hide_y, double& hide_theta, double x_obs[], double y_obs[], int N_obs) {
-	double rx = S1->P[1]->x[2]; // defender robot's x
-	double ry = S1->P[1]->x[3]; // defender robot's y
-	double opp_x = S1->P[2]->x[2]; // opponent x
-	double opp_y = S1->P[2]->x[3]; // opponent y
-	double opp_theta = S1->P[2]->x[1]; // opponent heading
+void find_hiding_position(int defender_x, int defender_y, int opponent_x, int opponent_y, image& rgb, image& label, image& a, double& hide_x, double& hide_y) {
+	const int MAX_OBS = 100;
+	int obs_x[MAX_OBS], obs_y[MAX_OBS];
+	int num_obs = find_obstacles(rgb, label, a, obs_x, obs_y, MAX_OBS);
 
 	const double PI = 3.14159265358979323846;
-
-	// Check if we are already in opponent's sight
-	// If not seen, prefer to stay at current spot
-	if (!is_robot_in_line_of_sight(S1->P[1], S1, x_obs, y_obs, N_obs)) {
-		// No need to find a new hiding spot
-		return;
-	}
 
 	// Otherwise, find a better hiding spot
 	double best_score = 1e6; // <- lower score is better (NOT 1e9!)
 
-	for (int i = 0; i < N_obs; i++) {
-		double obs_x = x_obs[i];
-		double obs_y = y_obs[i];
-
+	for (int i = 0; i < num_obs; i++) {
 		// Direction from opponent to obstacle
-		double dx = obs_x - opp_x;
-		double dy = obs_y - opp_y;
+		double dx = obs_x[i] - opponent_x;
+		double dy = obs_y[i] - opponent_y;
 		double dist_to_opp_sq = dx * dx + dy * dy;
 
 		// Candidate hiding position (behind obstacle relative to opponent)
-		double candidate_x = obs_x + dx * 0.5;
-		double candidate_y = obs_y + dy * 0.5;
+		double candidate_x = obs_x[i] + dx * 0.5;
+		double candidate_y = obs_y[i] + dy * 0.5;
 
 		// Distance from defender to this hiding spot
-		double dx_robot = candidate_x - rx;
-		double dy_robot = candidate_y - ry;
-		double dist_to_robot_sq = dx_robot * dx_robot + dy_robot * dy_robot;
+		double dist_to_robot_sq = (candidate_x-defender_x)*(candidate_x-defender_x)+(candidate_y-defender_y)*(candidate_y-defender_y);
 
 		// Scoring function: prefer obstacles far from opponent, but not too far from us
 		double score = dist_to_opp_sq - 0.5 * dist_to_robot_sq;
@@ -620,21 +619,28 @@ void find_hiding_position(robot_system* S1, double& hide_x, double& hide_y, doub
 
 }
 
-void navigate_to_target(robot* defender, double hide_x, double hide_y, double x_obs[], double y_obs[], int N_obs, int& pw_l, int& pw_r) {
+void navigate_to_target(robot* defender, double hide_x, double hide_y, image& rgb, image& label, image& a, int& pw_l, int& pw_r) {
+	const int MAX_OBS = 100;
+	int obs_x[MAX_OBS], obs_y[MAX_OBS];
+	int num_obs = find_obstacles(rgb, label, a, obs_x, obs_y, MAX_OBS);
+	
 	double rx = defender->x[2];
 	double ry = defender->x[3];
 	double rtheta = defender->x[1];
+	
 	const double PI = 3.14159265358979323846;
+	
 	double dx = hide_x - rx;
 	double dy = hide_y - ry;
+	
 	double dist = sqrt(dx * dx + dy * dy);
 	
 	// Obstacle repulsion
 	double repulse_x = 0;
 	double repulse_y = 0;
-	for (int i = 0; i < N_obs; i++) {
-		double obs_dx = rx - x_obs[i];
-		double obs_dy = ry - y_obs[i];
+	for (int i = 0; i < num_obs; i++) {
+		double obs_dx = rx - obs_x[i];
+		double obs_dy = ry - obs_y[i];
 		double dist_sq = obs_dx * obs_dx + obs_dy * obs_dy;
 		if (dist_sq < 10000 && dist_sq > 1.0) {
 			double force = 10000.0 / dist_sq;
@@ -695,61 +701,43 @@ void navigate_to_target(robot* defender, double hide_x, double hide_y, double x_
 	if (pw_r > 2000) pw_r = 2000;
 }
 
-void dynamic_hide(robot* defender, robot_system* S1, double x_obs[], double y_obs[], int N_obs, int& pw_l, int& pw_r) {
+void dynamic_hide(robot* defender, image& rgb, image& rgb0, image& label, image& a, image& b, int& pw_l, int& pw_r) {
+	int Ic[4], Jc[4], nlabel;
 	static double hide_x = 0;
 	static double hide_y = 0;
-	static double hide_theta = 0;
+
 	static double last_opp_x = 0;
 	static double last_opp_y = 0;
 
-	double curr_opp_x = S1->P[2]->x[2];
-	double curr_opp_y = S1->P[2]->x[3];
+	copy(rgb, rgb0);
+	clean_up(rgb, a);
+	label_image(a, label, nlabel);
+	find_hollow_circles(nlabel, rgb, label, a, rgb0, Ic, Jc);
 
-	bool exposed = is_robot_in_line_of_sight(defender, S1, x_obs, y_obs, N_obs);
+	int defender_x = (Ic[0] + Ic[1]) / 2;
+	int defender_y = (Jc[0] + Jc[1]) / 2;
+	int opponent_x = (Ic[2] + Ic[3]) / 2;
+	int opponent_y = (Jc[2] + Jc[3]) / 2;
 
-	double dx = curr_opp_x - last_opp_x;
-	double dy = curr_opp_y - last_opp_y;
+
+
+	bool exposed = is_robot_in_line_of_sight(defender_x, defender_y, opponent_x, opponent_y, rgb0, label, a);
+
+	double dx = opponent_x - last_opp_x;
+	double dy = opponent_y - last_opp_y;
 	double opponent_speed = sqrt(dx * dx + dy * dy);
 
 	bool opponent_moved = opponent_speed > 1.0; // Movement threshold
-	find_hiding_position(S1, hide_x, hide_y, hide_theta, x_obs, y_obs, N_obs);
+	
 
 	if (exposed) {
-		//find_hiding_position(S1, hide_x, hide_y, hide_theta, x_obs, y_obs, N_obs);
-		// If the robot is in the line of sight, move away from the opponent's line of sight
-		double defender_x = defender->x[2];
-		double defender_y = defender->x[3];
-		double opponent_x = S1->P[2]->x[2];
-		double opponent_y = S1->P[2]->x[3];
-
-		// Perpendicular direction calculation to avoid LoS
-		double dx = opponent_x - defender_x;
-		double dy = opponent_y - defender_y;
-
-		double perpendicular_dx = -dy; // Rotate 90 degrees to the left
-		double perpendicular_dy = dx; // Rotate 90 degrees to the left
-
-		// Normalize the perpendicular direction
-		double magnitude = sqrt(perpendicular_dx * perpendicular_dx + perpendicular_dy * perpendicular_dy);
-		perpendicular_dx /= magnitude;
-		perpendicular_dy /= magnitude;
-
-		// Calculate the new target position based on the perpendicular vector
-		double move_x = defender_x + perpendicular_dx * 100; // Move by 100 units in the perpendicular direction
-		double move_y = defender_y + perpendicular_dy * 100;
-
-		// Use the existing navigation function to move the robot
-		navigate_to_target(defender, hide_x, hide_y, x_obs, y_obs, N_obs, pw_l, pw_r);
+		find_hiding_position(defender_x, defender_y, opponent_x, opponent_y, rgb0, label, a, hide_x, hide_y);
 	}
-	find_hiding_position(S1, hide_x, hide_y, hide_theta, x_obs, y_obs, N_obs);
-	//navigate_to_target(defender, hide_x, hide_y, x_obs, y_obs, N_obs, pw_l, pw_r);
-	last_opp_x = curr_opp_x;
-	last_opp_y = curr_opp_y;
+	navigate_to_target(defender, hide_x, hide_y, rgb0, label, a, pw_l, pw_r);
 	
-	Collision_Detection(my_robot_label,pw_l,pw_r);
+	last_opp_x = opponent_x;
+	last_opp_y = opponent_y;
 }
-
-*/
 
 //Marc functions
 void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
@@ -865,7 +853,7 @@ static void BWProcessing(image& InputImage, image& OutputImage) {
 	erode(TempImageB, TempImageA);
 	dialate(TempImageA, TempImageB);
 	dialate(TempImageB, TempImageA);
-	
+
 	/*
 	cout << "\nImage processing complete. BW objects found";
 	copy(TempImageA, View);
@@ -926,7 +914,7 @@ static void ColourProcessing(image& InputImage, image& OutputImage) {
 		fout << x << "," << hist[j] << "\n";
 	}
 	fout.close();
-		
+
 	threshold(TempImageA, TempImageB, Threshold);
 	invert(TempImageB, TempImageA);
 	erode(TempImageA, TempImageB);
@@ -947,7 +935,7 @@ static void ColourProcessing(image& InputImage, image& OutputImage) {
 }
 
 //Takes an RGB image and returns a correctly labeled image
-static void Process_Image(image& InputImage, image& LabelImageBW, image& LabelImageColour, int& nlabelBW, int&nlabelColour) {
+static void Process_Image(image& InputImage, image& LabelImageBW, image& LabelImageColour, int& nlabelBW, int& nlabelColour) {
 
 	image TempImage;
 
@@ -968,7 +956,7 @@ static void Process_Image(image& InputImage, image& LabelImageBW, image& LabelIm
 
 
 //Takes an RGB image and a labeled image and returns data on each object in the format [Ic, Jc, theta, H, S, V]
-static void Get_Image_Data(image& rgb, image& LabelImageBW, image& LabelImageColour, int nlabelBW,int nlabelColour, vector<array<int, 5>>& Bulk_Data) {
+static void Get_Image_Data(image& rgb, image& LabelImageBW, image& LabelImageColour, int nlabelBW, int nlabelColour, vector<array<int, 5>>& Bulk_Data) {
 
 	//Create Local Variables
 	int i, j, Pixel_Number, k;
