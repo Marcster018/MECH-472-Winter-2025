@@ -60,19 +60,15 @@ void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser
 
 	//Classify_Data_Troubleshooting(rgb, Robot_Data, Opponent_Data, Obstacle_Data);
 
-	//detect_obstruction(Ic, Jc, ObsLabel, rgb, label, detected);
+	//Shoot laser if defender is in sight
+	//Shoot_Laser (rgb, Robot_Data, Opponent_Data, Obstacle_Data, pw_laser, laser);
 
-	/*
-	if (detected == false) {
-		cout << "\nTracking opponent.";
-		opponent_track(Ic, Jc, rgb, label, pw_r, pw_l);
-	}
-	else {
-		pw_l = 1350;
-		pw_r = 1750;
-		//here the patrol function should go
-	}
-	*/
+	//Detect if current motion will result in a collision and prevent collision
+	Collision_Detection(rgb, Robot_Data, Opponent_Data, Obstacle_Data, pw_l, pw_r);
+
+	//Hunt defender
+
+
 	//pause();
 
 	free_image(LabelImageBW);
@@ -736,9 +732,9 @@ void dynamic_hide(int defender, image& rgb, image& rgb0, image& label, image& a,
 */
 
 //Marc's functions
-void Collision_Detection(array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data, image& label, int& pw_l, int& pw_r) {
-    const int width = label.width;
-    const int height = label.height;
+void Collision_Detection(image& rgb, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data, int& pw_l, int& pw_r) {
+    const int width = rgb.width;
+    const int height = rgb.height;
 	bool Obstruction;
 	
     // Define a scan zone in front of the robot
@@ -750,7 +746,6 @@ void Collision_Detection(array<array<int, 6>, 2>& Robot_Data, array<array<int, 6
     double rx = (Robot_Data[0][0]+ Robot_Data[1][0])/2;
 	double ry = (Robot_Data[0][1] + Robot_Data[0][1]) / 2;
 
-    i2byte* pl = (i2byte*)label.pdata;
 
     // project forward points in a fan shape
     // check within range of 10 to 30 pixels if there are any objects in the way
@@ -1221,7 +1216,7 @@ static void Classify_Data(image&rgb, image& LabelImageBW, image& LabelImageColou
 	free_image(TempImageB);
 }
 
-void Classify_Data_Troubleshooting(image& rgb, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data) {
+static void Classify_Data_Troubleshooting(image& rgb, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data) {
 	int i, j;
 	image TempImage;
 
@@ -1254,3 +1249,11 @@ void Classify_Data_Troubleshooting(image& rgb, array<array<int, 6>, 2>& Robot_Da
 	save_rgb_image("Classify_Data_Troubleshooting.bmp", TempImage);
 	free_image(TempImage);
 }
+
+/*
+static void Shoot_Laser(image& rgb, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data, int& pw_laser, int& laser) {
+	int I_laser, J_laser;
+
+
+}
+*/
