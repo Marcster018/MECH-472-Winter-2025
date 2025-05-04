@@ -736,18 +736,19 @@ void dynamic_hide(int defender, image& rgb, image& rgb0, image& label, image& a,
 */
 
 //Marc's functions
-void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
+void Collision_Detection(array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data, image& label, int& pw_l, int& pw_r) {
     const int width = label.width;
     const int height = label.height;
+	bool Obstruction;
 	
     // Define a scan zone in front of the robot
     const int safe_distance_px = 30;
     const int scan_width = 5;
 	
 	// Get robot's current position and heading
-    double theta = my_robot->x[1];
-    double rx = my_robot->x[2];
-    double ry = my_robot->x[3];
+    double theta = Robot_Data[0][2];
+    double rx = (Robot_Data[0][0]+ Robot_Data[1][0])/2;
+	double ry = (Robot_Data[0][1] + Robot_Data[0][1]) / 2;
 
     i2byte* pl = (i2byte*)label.pdata;
 
@@ -767,29 +768,29 @@ void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
                 return;
             }
 
-            // check for objectts
-            int label_val = pl[j * width + i];
-            if (label_val != 0) {
+            // check for objects
+            Obstruction = ObstacleAtLocation(i,j,Obstacle_Data);
+            if (Obstruction) {
                 // Something is directly ahead!
-                cout << "\n[Vision Collision] Label detected at (" << i << ", " << j << ") = " << label_val;
+               // cout << "\n[Vision Collision] Label detected at (" << i << ", " << j << ")";
 
-        	int delta_l = abs(pw_l - 1500);
-		int delta_r = abs(pw_r - 1500);
+        		int delta_l = abs(pw_l - 1500);
+				int delta_r = abs(pw_r - 1500);
 
-                if (((delta_l > delta_r) && (pw_l > pw_r)) || ((delta_l < delta_r) && (pw_l < pw_r))){
+				if (((delta_l > delta_r) && (pw_l > pw_r)) || ((delta_l < delta_r) && (pw_l < pw_r))){
                     // turning left -> turn harder left
                     pw_l = 2000; // backwards left
                     pw_r = 2000; // forward right
-                } else if (((delta_l > delta_r) && (pw_l < pw_r)) || ((delta_l < delta_r) && (pw_l > pw_r))){
+				} else if (((delta_l > delta_r) && (pw_l < pw_r)) || ((delta_l < delta_r) && (pw_l > pw_r))){
                     // turning right -> turn harder right
                     pw_l = 1000; // forward left
                     pw_r = 1000; // backwards right
-                } else if( (delta_l == delta_r) && (pw_l != pw_r) && ( pw_l < 1500 && pw_r > 1500) ){
-		    // if velocity was forward -> turns backwards
-		    pw_l = 2000; // backwards left
-		    pw_r = 1000; // backwards right 
-		}
-		return;
+				} else if( (delta_l == delta_r) && (pw_l != pw_r) && ( pw_l < 1500 && pw_r > 1500) ){
+				// if velocity was forward -> turns backwards
+				pw_l = 2000; // backwards left
+				pw_r = 1000; // backwards right 
+				}
+				return;
             }
         }
     }
@@ -798,6 +799,18 @@ void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
 
 //Jacob Functions
 
+//Determine if there is an obstacle at a given location
+static bool ObstacleAtLocation(int I, int J, vector<array<int, 6>>& Obstacle_Data) {
+	int k;
+
+	//Check to see if any Obstacle is at location (I, J)
+	for (k = 0; k < Obstacle_Data.size(); k++) {
+		if (Obstacle_Data[k][0] == I && Obstacle_Data[k][1] == J) return 1; //If obstacle at (I, J) return true
+	}
+
+	//If no obstacle at (I, J), return false
+	return 0;
+}
 //Creates a greyscale image. Threshold set to identify black/dark items
 static void BWProcessing(image& InputImage, image& OutputImage) {
 	int width, height, Threshold;

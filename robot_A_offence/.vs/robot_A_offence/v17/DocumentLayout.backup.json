@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
@@ -57,7 +57,7 @@
               "RelativeDocumentMoniker": "Team_functions.cpp",
               "ToolTip": "C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_offence\\Team_functions.cpp",
               "RelativeToolTip": "Team_functions.cpp",
-              "ViewState": "AgIAAM4CAAAAAAAAAAAAAEsAAAALAAAAAAAAAA==",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAAEcAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-05-03T14:38:00.627Z",
               "EditorCaption": ""
@@ -70,7 +70,7 @@
               "RelativeDocumentMoniker": "Team_functions.h",
               "ToolTip": "C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_offence\\Team_functions.h",
               "RelativeToolTip": "Team_functions.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABpAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-05-03T17:22:32.171Z",
               "EditorCaption": ""

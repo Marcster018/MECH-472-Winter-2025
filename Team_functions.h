@@ -26,9 +26,10 @@ void dynamic_hide(int defender, image& rgb, image& rgb0, image& label, image& a,
 double estimate_radius_from_image(image& rgb_obstacle, double IC, double JC);
 
 //marc functions
-void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r);
+void Collision_Detection(array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data, image& label, int& pw_l, int& pw_r);
 
 //Jacob Functions
+static bool ObstacleAtLocation(int I, int J, vector<array<int, 6>>& Obstacle_Data);
 static void BWProcessing(image& InputImage, image& OutputImage);
 static void ColourProcessing(image& InputImage, image& OutputImage);
 static void Process_Image(image& InputImage, image& LabelImageBW, image& LabelImageColour, int& nlabelBW, int& nlabelColour); //Takes an RGB image and returns a correctly labeled image
