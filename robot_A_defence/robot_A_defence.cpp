@@ -44,24 +44,24 @@ int main()
 	opponent_mode = 0;
 	
 	//Obstacle Variables
-	const int N_obs = 5;	// number of obstacles
+	const int N_obs = 2;	// number of obstacles
 	char obstacle_file[N_obs][S_MAX] = { //File names for all the obstacles. You must have the same number of names as obstacles
-		"obstacle_blue.bmp" , "obstacle_green.bmp", "obstacle_orange.bmp", "obstacle_red.bmp", "obstacle_black.bmp"
+		"obstacle_blue.bmp" , "obstacle_green.bmp"
 	};		
-	x_obs[0] = 300; // pixels
-	y_obs[0] = 135; // pixels
+	x_obs[0] = 270.5; // pixels
+	y_obs[0] = 270.5; // pixels
 
-	x_obs[1] = 300; // pixels
-	y_obs[1] = 400; // pixels
+	x_obs[1] = 135; // pixels
+	y_obs[1] = 135; // pixels
 
-	x_obs[2] = 185; // pixels
-	y_obs[2] = 135; // pixels
+//	x_obs[2] = 185; // pixels
+//	y_obs[2] = 135; // pixels
 
-	x_obs[3] = 185; // pixels
-	y_obs[3] = 400; // pixels
+//	x_obs[3] = 185; // pixels
+//	y_obs[3] = 400; // pixels
 
-	x_obs[4] = 450; // pixels
-	y_obs[4] = 350; // pixels
+//	x_obs[4] = 450; // pixels
+//	y_obs[4] = 350; // pixels
 
 
 	//Map Variables
@@ -149,7 +149,7 @@ int main()
 	acquire_image_sim(rgb);
 	// measure initial clock time
 	tc0 = high_resolution_time(); 
-
+	
 	//Determine opponent behaviour
 	cout << "\nOpponent behaviour has been predefined to best illustrate the capabilities of our Attack program.\nHowever the opponent can also be controlled using keyboard input for further testing.";
 	cout << "\n\nTo run the program against the enemy with the predefined behaviour, press 1.";
@@ -167,7 +167,7 @@ int main()
 				opponent_mode = 0;
 		}
 	}
-
+	
 	while(1) {
 
 		// simulates the robots and acquires the image from simulation
@@ -175,16 +175,17 @@ int main()
 		tc = high_resolution_time() - tc0;
 
 		//Control our robot
-		//Defence_Sequence(rgb, pw_l, pw_r, pw_laser, laser, Player);
+		Defence_Sequence(rgb, pw_l, pw_r, Player);
 		set_inputs(pw_l,pw_r,pw_laser,laser,max_speed);
 
 		//Control opponent robot
 		Example_KeyboardInput(pw_l_o, pw_r_o);
 		set_opponent_inputs(pw_l_o, pw_r_o, pw_laser_o, laser_o, opponent_max_speed);
-
+		
+		
 		//View changes
-		view_rgb_image(rgb,v_mode);
-		pause();
+		view_rgb_image(rgb);
+		//pause();
 	}
 
 	// free the image memory before the program completes

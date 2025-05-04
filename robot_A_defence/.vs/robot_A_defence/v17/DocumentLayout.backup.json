@@ -1,7 +1,20 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\frede\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_defence.vcxproj|C:\\Users\\frede\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\Team_functions.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_defence.vcxproj|solutionrelative:Team_functions.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_defence.vcxproj|C:\\Users\\frede\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\robot_A_defence.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_defence.vcxproj|solutionrelative:robot_A_defence.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_defence.vcxproj|C:\\Users\\frede\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\Team_functions.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_defence.vcxproj|solutionrelative:Team_functions.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +22,46 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{a0c5197d-0ac7-4b63-97cd-8872a789d233}"
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Team_functions.h",
+              "DocumentMoniker": "C:\\Users\\frede\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\Team_functions.h",
+              "RelativeDocumentMoniker": "Team_functions.h",
+              "ToolTip": "C:\\Users\\frede\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\Team_functions.h",
+              "RelativeToolTip": "Team_functions.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-05-04T17:17:23.422Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Team_functions.cpp",
+              "DocumentMoniker": "C:\\Users\\frede\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\Team_functions.cpp",
+              "RelativeDocumentMoniker": "Team_functions.cpp",
+              "ToolTip": "C:\\Users\\frede\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\Team_functions.cpp*",
+              "RelativeToolTip": "Team_functions.cpp*",
+              "ViewState": "AgIAABICAAAAAAAAAAAAAHQCAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-04T15:30:29.953Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "robot_A_defence.cpp",
+              "DocumentMoniker": "C:\\Users\\frede\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\robot_A_defence.cpp",
+              "RelativeDocumentMoniker": "robot_A_defence.cpp",
+              "ToolTip": "C:\\Users\\frede\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_defence\\robot_A_defence.cpp",
+              "RelativeToolTip": "robot_A_defence.cpp",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAAAGsAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-04T15:21:30.024Z",
+              "EditorCaption": ""
             }
           ]
         }
