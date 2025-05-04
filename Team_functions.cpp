@@ -419,12 +419,13 @@ void go_to(int Ic[4], int Jc[4], int& pw_l, int& pw_r, image& rgb,image &label, 
 			pw_r = 1500;
 		}
 	}
-Collision_Detection(my_robot_label,pw_l,pw_r);
+//Collision_Detection(my_robot_label,pw_l,pw_r);
 }
 
 
 
 //Fred functions
+/*
 int auto_select_shape_by_size(i2byte& nlabel, image& label)
 // select an object from a binary image based on its area
 // use instead of the select_object function in the
@@ -460,7 +461,7 @@ int auto_select_shape_by_size(i2byte& nlabel, image& label)
 	}
 	return 0; // no errors
 }
-
+*/
 //my functions also use the find_hollow_circles and clean_up functions of Anthony
 
 int find_obstacles(image& rgb, image& label, image& a, int obs_x[], int obs_y[], int max_obs) {
