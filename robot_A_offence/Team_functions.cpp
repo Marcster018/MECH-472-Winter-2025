@@ -926,7 +926,6 @@ static void ColourProcessing(image& InputImage, image& OutputImage) {
 		fout << x << "," << hist[j] << "\n";
 	}
 	fout.close();
-	highpass_filter
 		
 	threshold(TempImageA, TempImageB, Threshold);
 	invert(TempImageB, TempImageA);

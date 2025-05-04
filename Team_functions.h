@@ -4,6 +4,9 @@
 
 using namespace std;
 
+//Attack
+void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser);
+
 //Anthony functions
 void find_hollow_circles(int& nlabels, image& rgb, image& label, image&a, image& rgb0, int Ic[4], int Jc[4])
 void clean_up(image& rgb, image&a)
@@ -26,4 +29,8 @@ double estimate_radius_from_image(image& rgb_obstacle, double IC, double JC);
 void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r)
 
 //Jacob Functions
-void Get_Object_RGB_Colour(image& rgb, int number_labels, vector<array<int, 5>>& Pos_RGB)
+static void BWProcessing(image& InputImage, image& OutputImage);
+static void ColourProcessing(image& InputImage, image& OutputImage);
+static void Process_Image(image& InputImage, image& LabelImageBW, image& LabelImageColour, int& nlabelBW, int& nlabelColour); //Takes an RGB image and returns a correctly labeled image
+static void Get_Image_Data(image& rgb, image& LabelImageBW, image& LabelImageColour, int nlabelBW, int nlabelColour, vector<array<int, 5>>& Bulk_Data);//Takes an RGB image and a labeled image and returns data on each object in the format [Ic, Jc, theta, H, S, V]
+static void Classify_Data();
