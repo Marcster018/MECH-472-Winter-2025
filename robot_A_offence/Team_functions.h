@@ -5,7 +5,7 @@
 using namespace std;
 
 //Attack
-void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser);
+void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser, char Player);
 
 //Anthony functions
 void find_hollow_circles(int& nlabels, image& rgb, image& label, image& a, image& rgb0, int Ic[4], int Jc[4]);
@@ -32,5 +32,9 @@ void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r);
 static void BWProcessing(image& InputImage, image& OutputImage);
 static void ColourProcessing(image& InputImage, image& OutputImage);
 static void Process_Image(image& InputImage, image& LabelImageBW, image& LabelImageColour, int& nlabelBW, int& nlabelColour); //Takes an RGB image and returns a correctly labeled image
-static void Get_Image_Data(image& rgb, image& LabelImageBW, image& LabelImageColour, int nlabelBW, int nlabelColour, vector<array<int, 5>>& Bulk_Data);//Takes an RGB image and a labeled image and returns data on each object in the format [Ic, Jc, theta, H, S, V]
-static void Classify_Data();
+static void Get_Image_Data(image& rgb, image& LabelImageBW, image& LabelImageColour, int nlabelBW, int nlabelColour, vector<array<int, 6>>& Bulk_Data);//Takes an RGB image and a labeled image and returns data on each object in the format [Ic, Jc, theta, H, S, V]
+static bool Hollow_Circle(image& rgb, image& LabelImage, int& nlabels, int Ic, int Jc);
+enum ColourTypes { GREEN, RED, ORANGE, BLUE, WRONG }; //Possible robot colours. Each colour is assigned an integer for simplicity
+static ColourTypes Object_Colour(int R, int G, int B);
+static void Assign_Data(char Player, ColourTypes Colour, array<int, 6>& Bulk_Data, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data);
+static void Classify_Data(image& rgb, image& LabelImageBW, image& LabelImageColour, int nlabelBW, int nlabelColour, vector<array<int, 6>>& Bulk_Data, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data, char Player);

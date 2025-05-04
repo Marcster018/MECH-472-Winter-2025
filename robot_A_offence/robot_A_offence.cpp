@@ -133,10 +133,12 @@ int main()
 	//Define Gameplay variables
 	image rgb;
 	int height, width;
+	char Player;
 
 	//Initialize Gameplay variables
 	width  = 640;
 	height = 480;
+	Player = 'A';
 
 	rgb.type = RGB_IMAGE;
 	rgb.width = width;
@@ -173,7 +175,7 @@ int main()
 		tc = high_resolution_time() - tc0;
 
 		//Control our robot
-		Attack_Sequence(rgb, pw_l, pw_r, pw_laser, laser);
+		Attack_Sequence(rgb, pw_l, pw_r, pw_laser, laser, Player);
 		set_inputs(pw_l,pw_r,pw_laser,laser,max_speed);
 
 		//Control opponent robot
@@ -194,6 +196,7 @@ int main()
 
 		//View changes
 		view_rgb_image(rgb,v_mode);
+		pause();
 	}
 
 	// free the image memory before the program completes

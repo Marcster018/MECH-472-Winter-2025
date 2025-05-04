@@ -21,13 +21,13 @@ using namespace std;
 #define KEY(c) ( GetAsyncKeyState((int)(c)) & (SHORT)0x8000 )
 
 //Attack Function
-void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser) {
+void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser, char Player) {
 
 	int height, width, nlabelBW, nlabelColour;
-	static vector <array <int, 5>> Bulk_Data;
-	static int Robot_Data[5];
-	static int Opposition_Data[5];
-	static vector <array <int, 5>> Obstacle_Data;
+	static vector <array <int, 6>> Bulk_Data; //Using vector to be able to scale the number of rows to the number of objects
+	static array<array<int, 6>, 2> Robot_Data;
+	static array<array<int, 6>, 2> Opponent_Data;
+	static vector <array <int, 6>> Obstacle_Data;
 	bool detected = false;
 	image ProcessingImage, LabelImageBW, LabelImageColour;
 
@@ -51,9 +51,9 @@ void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser
 
 	Process_Image(ProcessingImage, LabelImageBW, LabelImageColour, nlabelBW, nlabelColour);
 
-	//Get_Image_Data(rgb,LabelImageBW,LabelImageColour, nlabelBW,nlabelColour,Bulk_Data);
+	Get_Image_Data(rgb,LabelImageBW,LabelImageColour, nlabelBW,nlabelColour,Bulk_Data);
 
-	//ClassifyData();
+	Classify_Data(rgb, LabelImageBW, LabelImageColour, nlabelBW, nlabelColour, Bulk_Data, Robot_Data, Opponent_Data, Obstacle_Data, Player);
 
 	//detect_obstruction(Ic, Jc, ObsLabel, rgb, label, detected);
 
@@ -111,25 +111,25 @@ void find_hollow_circles(int& nlabels, image& rgb, image& label, image&a, image&
 
 			//green
 			if (R < 120 && G >120 && B < 150) {
-				draw_point_rgb(rgb, ic, jc, 0, 255, 0);
+				//draw_point_rgb(rgb, ic, jc, 0, 255, 0);
 				Ic[0] = ic;
 				Jc[0] = jc;
 			}
 			//Red
 			else if (R > 100 && G < 100 && B < 100) {
-				draw_point_rgb(rgb, ic, jc, 255, 0, 0);
+				//draw_point_rgb(rgb, ic, jc, 255, 0, 0);
 				Ic[1] = ic;
 				Jc[1] = jc;
 			}
 			//orange
 			else if (R > 220 && G > 130 && G < 200 && B < 150) {
-				draw_point_rgb(rgb, ic, jc, 255, 100, 0);
+				//draw_point_rgb(rgb, ic, jc, 255, 100, 0);
 				Ic[2] = ic;
 				Jc[2] = jc;
 			}
 			//blue
 			else if (R < 60 && G < 175 && B > 200) {
-				draw_point_rgb(rgb, ic, jc, 0, 0, 255);
+				//draw_point_rgb(rgb, ic, jc, 0, 0, 255);
 				Ic[3] = ic;
 				Jc[3] = jc;
 			}
@@ -804,6 +804,7 @@ void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
 //Jacob Functions
 
 
+//Creates a greyscale image. Threshold set to identify black/dark items
 static void BWProcessing(image& InputImage, image& OutputImage) {
 	int width, height, Threshold;
 	image TempImageA, TempImageB, View;
@@ -829,6 +830,7 @@ static void BWProcessing(image& InputImage, image& OutputImage) {
 	allocate_image(TempImageB);
 	allocate_image(View);
 
+	//Convert into greyscale, and scale brightness to cover full range.
 	copy(InputImage, TempImageA);
 	scale(TempImageA, TempImageB);
 	lowpass_filter(TempImageB, TempImageA);
@@ -848,6 +850,7 @@ static void BWProcessing(image& InputImage, image& OutputImage) {
 	fout.close();
 	*/
 
+	//Perform opperations to reduce noise
 	threshold(TempImageA, TempImageB, Threshold);
 	invert(TempImageB, TempImageA);
 	erode(TempImageA, TempImageB);
@@ -855,10 +858,11 @@ static void BWProcessing(image& InputImage, image& OutputImage) {
 	dialate(TempImageA, TempImageB);
 	dialate(TempImageB, TempImageA);
 
+	//For troubleshooting
 	/*
 	cout << "\nImage processing complete. BW objects found";
 	copy(TempImageA, View);
-	save_rgb_image("BWProcessedImage.bmp", View);  //For troubleshooting
+	save_rgb_image("BWProcessedImage.bmp", View);
 	pause();
 	*/
 
@@ -869,6 +873,7 @@ static void BWProcessing(image& InputImage, image& OutputImage) {
 	free_image(View);
 }
 
+//Creates a greyscale image. Threshold set to identify colourful/bright items
 static void ColourProcessing(image& InputImage, image& OutputImage) {
 	int width, height, Threshold;
 	image TempImageA, TempImageB, View;
@@ -894,15 +899,13 @@ static void ColourProcessing(image& InputImage, image& OutputImage) {
 	allocate_image(TempImageB);
 	allocate_image(View);
 
+	//Convert into greyscale, and scale brightness to cover full range.
 	copy(InputImage, TempImageA);
 	scale(TempImageA, TempImageB);
 	lowpass_filter(TempImageB, TempImageA);
 
-	cout << "\nHistogram created. Greyscale image";
-	copy(TempImageA, View);
-	save_rgb_image("ColourGreyscaleImage.bmp", View);  //For troubleshooting
-	pause();
-
+	//For troubleshooting
+	/*
 	//Make a Histogram
 	int nhist, j;
 	double hist[255], hmin, hmax, x;
@@ -915,7 +918,14 @@ static void ColourProcessing(image& InputImage, image& OutputImage) {
 		fout << x << "," << hist[j] << "\n";
 	}
 	fout.close();
+	cout << "\nHistogram created. Greyscale image";
+	copy(TempImageA, View);
+	save_rgb_image("ColourGreyscaleImage.bmp", View);
+	pause();
+	*/
 
+
+	//Perform opperations to reduce noise
 	threshold(TempImageA, TempImageB, Threshold);
 	invert(TempImageB, TempImageA);
 	erode(TempImageA, TempImageB);
@@ -923,10 +933,13 @@ static void ColourProcessing(image& InputImage, image& OutputImage) {
 	dialate(TempImageA, TempImageB);
 	dialate(TempImageB, TempImageA);
 
+	//For troubleshooting
+	/*
 	cout << "\nImage processing complete. Colour objects Found";
 	copy(TempImageA, View);
-	save_rgb_image("ColourProcessedImage.bmp", View);  //For troubleshooting
+	save_rgb_image("ColourProcessedImage.bmp", View);
 	pause();
+	*/
 
 	copy(TempImageA, OutputImage);
 
@@ -935,7 +948,7 @@ static void ColourProcessing(image& InputImage, image& OutputImage) {
 	free_image(View);
 }
 
-//Takes an RGB image and returns a correctly labeled image
+//Labels the black and colourful greyscale images
 static void Process_Image(image& InputImage, image& LabelImageBW, image& LabelImageColour, int& nlabelBW, int& nlabelColour) {
 
 	image TempImage;
@@ -947,42 +960,197 @@ static void Process_Image(image& InputImage, image& LabelImageBW, image& LabelIm
 	allocate_image(TempImage);
 
 	BWProcessing(InputImage, TempImage);
-	//label_image(TempImage, LabelImageBW, nlabelBW);
+	label_image(TempImage, LabelImageBW, nlabelBW);
 
 	ColourProcessing(InputImage, TempImage);
-	//label_image(TempImage, LabelImageColour, nlabelColour);
+	label_image(TempImage, LabelImageColour, nlabelColour);
 
 	free_image(TempImage);
 }
 
-
-//Takes an RGB image and a labeled image and returns data on each object in the format [Ic, Jc, theta, H, S, V]
-static void Get_Image_Data(image& rgb, image& LabelImageBW, image& LabelImageColour, int nlabelBW, int nlabelColour, vector<array<int, 5>>& Bulk_Data) {
+//Get data in the format: [Ic, Jc, theta, R, G, B] for all labeled objects from the black and colourful image processing
+static void Get_Image_Data(image& rgb, image& LabelImageBW, image& LabelImageColour, int nlabelBW, int nlabelColour, vector<array<int, 6>>& Bulk_Data) {
 
 	//Create Local Variables
-	int i, j, Pixel_Number, k;
+	int i, Pixel_Number, k;
 	int height, width;
+	double C[2];
 	ibyte* p;
+	image TempImageA, TempImageB;
 
 	//Initialize Variables
 	height = rgb.height;
 	width = rgb.width;
 	p = rgb.pdata;
+	C[0] = 0, C[1] = 0;
 
-	//Identify Colour of Each Object
+	TempImageA.type = GREY_IMAGE;
+	TempImageA.width = rgb.width;
+	TempImageA.height = rgb.height;
+
+	TempImageB.type = GREY_IMAGE;
+	TempImageB.width = rgb.width;
+	TempImageB.height = rgb.height;
+
+	//Create a local greyscale image for centroid function
+	allocate_image(TempImageA);
+	allocate_image(TempImageB);
+	copy(rgb, TempImageA);
+	scale(TempImageA, TempImageB);
+	lowpass_filter(TempImageB, TempImageA);
+
+	
+	Bulk_Data.resize(nlabelBW + nlabelColour); //Updating size of Bulk_Data to prevent accessing out of range of the matrix
+
+	//Get Position Data for BW Objects
 	for (k = 1; k <= nlabelBW; k++) {
-		for (i = 0; i < 3; i++) {
+		centroid(TempImageA, LabelImageBW, k, C[0], C[1]);
+		for (i = 0; i < 2; i++) {
+			Bulk_Data[k - 1][i] = static_cast<int>(round(C[i]));
+		}
+	}
+	//Get Position Data for Colourful Objects
+	for (k = 1; k <= nlabelColour; k++) {
+		centroid(TempImageA, LabelImageColour, k, C[0], C[1]);
+		for (i = 0; i < 2; i++) {
+			Bulk_Data[k - 1 + nlabelBW][i] = static_cast<int>(round(C[i]));
+		}
+	}
+	//Get Colour Data for All Objects at their centroid
+	for (k = 0; k < (nlabelBW + nlabelColour); k++) {
+		Pixel_Number = (Bulk_Data[k][1] * width) + Bulk_Data[k][0];
+		Bulk_Data[k][3] = p[3 * Pixel_Number + 2];  //R
+		Bulk_Data[k][4] = p[3 * Pixel_Number + 1];  //G
+		Bulk_Data[k][5] = p[3 * Pixel_Number];		//B
+	}
 
-			Pixel_Number = (Bulk_Data[k][1] * width) + Bulk_Data[k][0];
-			j = i + 2;
-			Bulk_Data[k][j] = p[3 * Pixel_Number + i];
+	//For TroubleShooting
+	/*
+	cout << "\nHere is the object data:\n";
+	for (k = 0; k < (nlabelBW + nlabelColour); k++) {
+		cout << "\nObject " << (k) << " Data: [";
+		for (i = 0; i < 5; i++) {
+			cout << Bulk_Data[k][i] << ", ";
+		}
+		cout << Bulk_Data[k][5] << "]";
+		draw_point_rgb(rgb, Bulk_Data[k][0], Bulk_Data[k][1], 255, 255, 255);
+	}
+	*/
+
+	//Release image memory
+	free_image(TempImageA);
+	free_image(TempImageB);
+}
+
+//Modified version of Anthony's find_hollow_circles function
+static bool Hollow_Circle(image& rgb, image& LabelImage, int& nlabels,  int Ic, int Jc) {
+	
+	//Initialize Variables
+	i2byte* pl, * plc;
+	int width, height, Pixel_Number;
+
+	//Define Local Variables
+	pl = (i2byte*)LabelImage.pdata; //Pointer to label image
+	width = rgb.width;
+	height = rgb.height;
+
+	//Function
+	Pixel_Number = (Jc*width) + Ic; //Pixel number of the centroid (greyscale image) 
+	plc = pl + Pixel_Number; //Pixel number of the centroid (label image)
+
+	//Logic: If label at centroid is 0, then the centroid is on the background. Therefore, the object is a hollow circle
+	if (*plc == 0) {
+		return(1);
+	}
+	else {
+		return(0);
+	}
+}
+
+//Determine colour of object based on possible colour types
+static ColourTypes Object_Colour (int R, int G, int B) {
+	if (R < 120 && G > 120 && B < 150)
+		return GREEN;
+	else if (R > 100 && G < 100 && B < 100)
+		return RED;
+	else if (R > 220 && G > 130 && G < 200 && B < 150)
+		return ORANGE;
+	else if (R < 60 && G < 175 && B > 200)
+		return BLUE;
+	else
+		return WRONG;
+}
+
+//Assign Bulk Data to either Robot or Opponent
+//Using Array notation to be able to directly copy the rows of the matrices
+static void Assign_Data(char Player, ColourTypes Colour,array<int, 6>&Bulk_Data, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data) {
+	if (Player == 'A') {
+		switch (Colour) {
+		case GREEN:  Robot_Data[0] = Bulk_Data; break; //Row 1 of Robot_Data is equal to the current row of Bulk_Data
+		case RED:    Robot_Data[1] = Bulk_Data; break; //Row 2 of Robot_Data is equal to the current row of Bulk_Data
+		case ORANGE: Opponent_Data[0] = Bulk_Data; break;
+		case BLUE:   Opponent_Data[1] = Bulk_Data; break;
+		default: break;
+		}
+	}
+	else if (Player == 'B') {
+		switch (Colour) {
+		case GREEN:  Opponent_Data[0] = Bulk_Data; break;
+		case RED:    Opponent_Data[1] = Bulk_Data; break;
+		case ORANGE: Robot_Data[0] = Bulk_Data; break;
+		case BLUE:   Robot_Data[1] = Bulk_Data; break;
+		default: break;
 		}
 	}
 }
 
-static void Classify_Data() {
-	/*
-	find_hollow_circles(nlabel, rgb, label, a, rgb0, Ic, Jc);
-	find_obstacles(rgb, label, a, nlabel, ObsLabel);
-	*/
+//Separate the Bulk Data into 3 object types: our robot, opponent robot, and obstacles.
+static void Classify_Data(image&rgb, image& LabelImageBW, image& LabelImageColour, int nlabelBW, int nlabelColour, vector<array<int, 6>>& Bulk_Data, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int,6>>& Obstacle_Data, char Player) {
+
+	//Initialize Local Variables
+	int k, i;
+	image TempImageA, TempImageB;
+	ColourTypes Colour;
+
+	//Define Local Variables
+	TempImageA.type = GREY_IMAGE;
+	TempImageA.width = rgb.width;
+	TempImageA.height = rgb.height;
+
+	TempImageB.type = GREY_IMAGE;
+	TempImageB.width = rgb.width;
+	TempImageB.height = rgb.height;
+
+	//Create local greyscale image for find_hollow_circles function
+	allocate_image(TempImageA);
+	allocate_image(TempImageB);
+	copy(rgb, TempImageA);
+	scale(TempImageA, TempImageB);
+	lowpass_filter(TempImageB, TempImageA);
+
+	//Identify Player and Opponent
+	//Uses black/dark processed image for better accuracy.
+	//The black/dark processed image has less noise than the colourful/bright processed image
+	for (k = 0; k < nlabelBW; k++) {
+		if (Hollow_Circle(rgb, LabelImageBW, nlabelBW, Bulk_Data[k][0], Bulk_Data[k][1])) {
+			Colour = Object_Colour(Bulk_Data[k][3], Bulk_Data[k][4], Bulk_Data[k][5]);
+
+			if (Colour == WRONG){
+				cout << "\nTHere was an error in determining the colour of the robots.";
+				break;
+				}
+			Assign_Data(Player, Colour, Bulk_Data[k], Robot_Data, Opponent_Data);
+
+		}
+	}
+
+	
+	//Identify Obstacles
+	//find_obstacles(rgb, label, a, nlabel, ObsLabel);
+	
+
+
+	//Release image memory
+	free_image(TempImageA);
+	free_image(TempImageB);
 }
