@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_offence.vcxproj|solutionrelative:Team_functions.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_offence.vcxproj|C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_offence\\robot_A_offence.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_offence.vcxproj|solutionrelative:robot_A_offence.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_offence.vcxproj|C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_offence\\Team_functions.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_offence.vcxproj|solutionrelative:Team_functions.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_offence.vcxproj|C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_offence\\robot_A_offence.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_offence.vcxproj|solutionrelative:robot_A_offence.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_offence.vcxproj|C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_offence\\Example.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -34,7 +34,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "robot_A_offence.cpp",
               "DocumentMoniker": "C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_offence\\robot_A_offence.cpp",
               "RelativeDocumentMoniker": "robot_A_offence.cpp",
@@ -43,8 +43,7 @@
               "ViewState": "AgIAAG8AAAAAAAAAAAAAAEQAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-05-03T14:23:55.197Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -58,20 +57,20 @@
               "RelativeDocumentMoniker": "Team_functions.cpp",
               "ToolTip": "C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_offence\\Team_functions.cpp",
               "RelativeToolTip": "Team_functions.cpp",
-              "ViewState": "AgIAACUAAAAAAAAAAAAAADsAAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAM4CAAAAAAAAAAAAAEsAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-05-03T14:38:00.627Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Team_functions.h",
               "DocumentMoniker": "C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_offence\\Team_functions.h",
               "RelativeDocumentMoniker": "Team_functions.h",
               "ToolTip": "C:\\Users\\jacob\\Documents\\GitHub\\MECH-472-Winter-2025\\robot_A_offence\\Team_functions.h",
               "RelativeToolTip": "Team_functions.h",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAACoAAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABpAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-05-03T17:22:32.171Z",
               "EditorCaption": ""

@@ -49,10 +49,13 @@ void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser
 
 	copy(rgb, ProcessingImage);
 
+	//Converting to Greyscale
 	Process_Image(ProcessingImage, LabelImageBW, LabelImageColour, nlabelBW, nlabelColour);
 
+	//Converting to Label Image
 	Get_Image_Data(rgb,LabelImageBW,LabelImageColour, nlabelBW,nlabelColour,Bulk_Data);
 
+	//Converting objects from Label Image into object types
 	Classify_Data(rgb, LabelImageBW, LabelImageColour, nlabelBW, nlabelColour, Bulk_Data, Robot_Data, Opponent_Data, Obstacle_Data, Player);
 
 	//Classify_Data_Troubleshooting(rgb, Robot_Data, Opponent_Data, Obstacle_Data);
@@ -411,6 +414,7 @@ void go_to(int Ic[4], int Jc[4], int& pw_l, int& pw_r, image& rgb, image& label,
 }
 
 //Fred's functions
+
 /*
 int auto_select_shape_by_size(i2byte& nlabel, image& label)
 // select an object from a binary image based on its area
@@ -691,8 +695,8 @@ void navigate_to_target(robot* defender, double hide_x, double hide_y, image& rg
 	if (pw_r > 2000) pw_r = 2000;
 }
 */
-/*
-void dynamic_hide(robot* defender, image& rgb, image& rgb0, image& label, image& a, image& b, int& pw_l, int& pw_r) {
+
+void dynamic_hide(int defender, image& rgb, image& rgb0, image& label, image& a, image& b, int& pw_l, int& pw_r) {
 	int Ic[4], Jc[4], nlabel;
 	static double hide_x = 0;
 	static double hide_y = 0;
@@ -729,7 +733,7 @@ void dynamic_hide(robot* defender, image& rgb, image& rgb0, image& label, image&
 	last_opp_x = opponent_x;
 	last_opp_y = opponent_y;
 }
-*/
+
 
 //Marc's functions
 void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
