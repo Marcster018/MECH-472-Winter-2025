@@ -324,7 +324,7 @@ void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image
 			int i = k % width;
 			int j = (k - i) / width;
 			if (abs(i - (int)cr_x) <= 1) {
-				draw_point_rgb(rgb, i, j, 255, 0, 0);
+				//draw_point_rgb(rgb, i, j, 255, 0, 0);
 				for (int a : OL) {
 					if (pl[k] == a) obstruction = true;
 				}
@@ -342,7 +342,7 @@ void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image
 			int j = (k - i) / width;
 			float y = i * m + b;
 			if (abs(j - (int)y) <= 1) {
-				draw_point_rgb(rgb, i, j, 255, 0, 0);
+				//draw_point_rgb(rgb, i, j, 255, 0, 0);
 				for (int a : OL) {
 					if (pl[k] == a) obstruction = true;
 				}
@@ -695,7 +695,7 @@ void navigate_to_target(robot* defender, double hide_x, double hide_y, image& rg
 	if (pw_r > 2000) pw_r = 2000;
 }
 */
-
+/*
 void dynamic_hide(int defender, image& rgb, image& rgb0, image& label, image& a, image& b, int& pw_l, int& pw_r) {
 	int Ic[4], Jc[4], nlabel;
 	static double hide_x = 0;
@@ -733,7 +733,7 @@ void dynamic_hide(int defender, image& rgb, image& rgb0, image& label, image& a,
 	last_opp_x = opponent_x;
 	last_opp_y = opponent_y;
 }
-
+*/
 
 //Marc's functions
 void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
@@ -1179,15 +1179,16 @@ static void Classify_Data(image&rgb, image& LabelImageBW, image& LabelImageColou
 	}
 
 	//Identify Obstacles
-	vector<int> Obstacle_Objects; //1D dynamic array
+	vector<int> Obstacle_Objects; //1D dynamic array containing the object number of the obstacles
 	find_obstacles(rgb, LabelImageColour, TempImageA, nlabelColour, Obstacle_Objects);
 	
 	for (i = 0; i < Obstacle_Objects.size(); i++) {
 		Obstacle_Objects[i] += nlabelBW; //Increment each label number by the number of BW labels since the BW labels come before the Colour labels in Bulk_Data
 	}
 
-	Obstacle_Data.resize(Obstacle_Objects.size());
+	Obstacle_Data.resize(Obstacle_Objects.size()); //Size obstacle_data to prevent out-of-range errors
 
+	//Of the objects identified as obstacles, only the objects which are "NotGrey" are actually obstacles
 	for (i = 0; i < Obstacle_Objects.size(); i++) {
 		j = Obstacle_Objects[i] - 1;
 		if (NotGrey(Bulk_Data[j][3], Bulk_Data[j][4], Bulk_Data[j][5])) {
@@ -1195,7 +1196,13 @@ static void Classify_Data(image&rgb, image& LabelImageBW, image& LabelImageColou
 			accumulator++;
 		}
 	}
-	Obstacle_Data.resize(accumulator);
+	Obstacle_Data.resize(accumulator); //Truncate the trailing rows of 0s
+	
+	//Add obstacle size data to the Obstacle_Data
+	for (i = 0; i < Obstacle_Data.size(); i++) {
+		Obstacle_Data[i][2] = static_cast <int>(ceil(estimate_radius_from_image(LabelImageColour, Obstacle_Data[i][0], Obstacle_Data[i][1]))); //Want the round-up integer size of the obstacle
+	}
+
 	//Release image memory
 	free_image(TempImageA);
 	free_image(TempImageB);
