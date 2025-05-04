@@ -55,6 +55,8 @@ void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser
 
 	Classify_Data(rgb, LabelImageBW, LabelImageColour, nlabelBW, nlabelColour, Bulk_Data, Robot_Data, Opponent_Data, Obstacle_Data, Player);
 
+	Classify_Data_Troubleshooting(rgb, Robot_Data, Opponent_Data, Obstacle_Data);
+
 	//detect_obstruction(Ic, Jc, ObsLabel, rgb, label, detected);
 
 	/*
@@ -68,7 +70,7 @@ void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser
 		//here the patrol function should go
 	}
 	*/
-	pause();
+	//pause();
 
 	free_image(LabelImageBW);
 	free_image(LabelImageColour);
@@ -216,7 +218,7 @@ void find_obstacles(image& rgb, image& label, image& a, int nlabel, vector<int>&
 		if (diff < 3 && diff>0) {//by trial and error below 3 were the obstacles for diff
 			OL.push_back(l);
 			centroid(a, label, l, ic, jc);
-			draw_point_rgb(rgb, ic, jc, 255, 0, 0);
+			//draw_point_rgb(rgb, ic, jc, 255, 0, 0); //For Troubleshooting
 		}
 	}
 }
@@ -1055,8 +1057,32 @@ static bool Hollow_Circle(image& rgb, image& LabelImage, int& nlabels,  int Ic, 
 	}
 }
 
+static bool NotGrey(int R, int G, int B) {
+	double MaxValue, MinValue, Range, Average;
+
+	MaxValue = R;
+	if (G > MaxValue)  MaxValue = G;
+	if (B > MaxValue)  MaxValue = B;
+
+	MinValue = R;
+	if (G < MinValue)  MinValue = G;
+	if (B < MinValue)  MinValue = B;
+
+	Range = MaxValue - MinValue;
+	Average = (R + G + B) / 3.0;
+
+	if (Range < 20 && Average > 127.5) {//If all values of RGB are similar and the object is bright, it is grey
+		return 0;
+	}
+		
+	else {
+		return 1;
+	}
+}
 //Determine colour of object based on possible colour types
 static ColourTypes Object_Colour (int R, int G, int B) {
+
+
 	if (R < 120 && G > 120 && B < 150)
 		return GREEN;
 	else if (R > 100 && G < 100 && B < 100)
@@ -1065,8 +1091,6 @@ static ColourTypes Object_Colour (int R, int G, int B) {
 		return ORANGE;
 	else if (R < 60 && G < 175 && B > 200)
 		return BLUE;
-	//else if (variance is less than a value)
-		//return GREY;
 	else
 		return WRONG;
 }
@@ -1082,7 +1106,7 @@ static double Calculate_Theta(double x1, double y1, double x2, double y2) {
 
 //Assign Bulk Data to either Robot or Opponent
 //Using Array notation to be able to directly copy the rows of the matrices
-static void Assign_Data(char Player, ColourTypes Colour,array<int, 6>&Bulk_Data, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data) {
+static void Assign_Robot_Data(char Player, ColourTypes Colour,array<int, 6>&Bulk_Data, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data) {
 	if (Player == 'A') {
 		switch (Colour) {
 		case GREEN:  Robot_Data[0] = Bulk_Data; break; //Row 1 of Robot_Data is equal to the current row of Bulk_Data
@@ -1107,11 +1131,12 @@ static void Assign_Data(char Player, ColourTypes Colour,array<int, 6>&Bulk_Data,
 static void Classify_Data(image&rgb, image& LabelImageBW, image& LabelImageColour, int nlabelBW, int nlabelColour, vector<array<int, 6>>& Bulk_Data, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int,6>>& Obstacle_Data, char Player) {
 
 	//Initialize Local Variables
-	int k, i;
+	int k, i, j, accumulator;
 	image TempImageA, TempImageB;
 	ColourTypes Colour;
 
 	//Define Local Variables
+	accumulator = 0;
 	TempImageA.type = GREY_IMAGE;
 	TempImageA.width = rgb.width;
 	TempImageA.height = rgb.height;
@@ -1138,7 +1163,7 @@ static void Classify_Data(image&rgb, image& LabelImageBW, image& LabelImageColou
 				cout << "\nTHere was an error in determining the colour of the robots.";
 				break;
 				}
-			Assign_Data(Player, Colour, Bulk_Data[k], Robot_Data, Opponent_Data);
+			Assign_Robot_Data(Player, Colour, Bulk_Data[k], Robot_Data, Opponent_Data);
 		}
 	}
 
@@ -1150,9 +1175,58 @@ static void Classify_Data(image&rgb, image& LabelImageBW, image& LabelImageColou
 	}
 
 	//Identify Obstacles
-	//find_obstacles(rgb, LabelImageColour, , nlabelColour);
+	vector<int> Obstacle_Objects; //1D dynamic array
+	find_obstacles(rgb, LabelImageColour, TempImageA, nlabelColour, Obstacle_Objects);
 	
+	for (i = 0; i < Obstacle_Objects.size(); i++) {
+		Obstacle_Objects[i] += nlabelBW; //Increment each label number by the number of BW labels since the BW labels come before the Colour labels in Bulk_Data
+	}
+
+	Obstacle_Data.resize(Obstacle_Objects.size());
+
+	for (i = 0; i < Obstacle_Objects.size(); i++) {
+		j = Obstacle_Objects[i] - 1;
+		if (NotGrey(Bulk_Data[j][3], Bulk_Data[j][4], Bulk_Data[j][5])) {
+			Obstacle_Data[accumulator] = Bulk_Data[j]; //Only update when object isn't grey
+			accumulator++;
+		}
+	}
+	Obstacle_Data.resize(accumulator);
 	//Release image memory
 	free_image(TempImageA);
 	free_image(TempImageB);
+}
+
+void Classify_Data_Troubleshooting(image& rgb, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data) {
+	int i, j;
+	image TempImage;
+
+	TempImage.type = RGB_IMAGE;
+	TempImage.width = rgb.width;
+	TempImage.height = rgb.height;
+
+	allocate_image(TempImage);
+	copy(rgb, TempImage);
+
+	//Draw black Point on robot
+	for (i = 0; i < Robot_Data.size(); i++) {
+		draw_point_rgb(TempImage, Robot_Data[i][0], Robot_Data[i][1], 0, 0, 0);
+	}
+	//Draw Grey Point on opponent
+	for (i = 0; i < Opponent_Data.size(); i++) {
+		draw_point_rgb(TempImage, Opponent_Data[i][0], Opponent_Data[i][1], 147, 147, 147);
+	}
+	//Draw white point on obstacles
+	for (i = 0; i < Obstacle_Data.size(); i++) {
+		cout << "\nObject " << (i) << " Data: [";
+		for (j = 0; j < 5; j++) {
+			cout << Obstacle_Data[i][j] << ", ";
+		}
+		cout << Obstacle_Data[i][5] << "]";
+	
+		draw_point_rgb(TempImage, Obstacle_Data[i][0], Obstacle_Data[i][1], 255, 255, 255);
+	}
+
+	save_rgb_image("Classify_Data_Troubleshooting.bmp", TempImage);
+	free_image(TempImage);
 }

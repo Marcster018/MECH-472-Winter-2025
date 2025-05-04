@@ -61,7 +61,7 @@ int main()
 	y_obs[3] = 400; // pixels
 
 	x_obs[4] = 450; // pixels
-	y_obs[4] = 250; // pixels
+	y_obs[4] = 350; // pixels
 
 
 	//Map Variables
