@@ -450,7 +450,7 @@ int auto_select_shape_by_size(i2byte& nlabel, image& label)
 	return 0; // no errors
 }
 */
-//my functions also use the find_hollow_circles and clean_up functions of Anthony
+
 
 /*
 int find_obstacles(image& rgb, image& label, image& a, int obs_x[], int obs_y[], int max_obs) {
@@ -490,6 +490,7 @@ int find_obstacles(image& rgb, image& label, image& a, int obs_x[], int obs_y[],
 	return n_obstacles;
 }
 */
+
 /*
 double estimate_radius_from_image(image& label, double IC, double JC) {
 	double radius, radius_max, radius_div, arc, arc_max, arc_div;
@@ -533,6 +534,7 @@ double estimate_radius_from_image(image& label, double IC, double JC) {
 	return radius_max; // max radius if full disk
 }
 */
+
 bool is_robot_in_line_of_sight(array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data) {
 	double dx, dy, fx, fy, a, b, c, sqrt_quad, t1, t2;
 	int defender_x, defender_y;
@@ -552,7 +554,6 @@ bool is_robot_in_line_of_sight(array<array<int, 6>, 2>& Robot_Data, array<array<
 		fx = Obstacle_Data[i][0] - opponent_x;
 		fy = Obstacle_Data[i][1] - opponent_y;
 
-		//double radius = Obstacle_Data[i][2];
 		double radius = 80;
 
 		a = dx * dx + dy * dy;
@@ -589,6 +590,8 @@ void find_hiding_position(array<array<int, 6>, 2>& Robot_Data, array<array<int, 
 	opponent_x = (Opponent_Data[0][0] + Opponent_Data[1][0]) / 2;
 	opponent_y = (Opponent_Data[0][1] + Opponent_Data[1][1]) / 2;
 
+	//cout << "\nopponent_x = " << opponent_x << "   opponent_y = " << opponent_y;
+
 	// find a hiding spot
 	double best_score = 1e6; 
 
@@ -618,23 +621,18 @@ void find_hiding_position(array<array<int, 6>, 2>& Robot_Data, array<array<int, 
 }
 
 
-void navigate_to_target(array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data, double hide_x, double hide_y, int& pw_l, int& pw_r) {
-	double rx, ry, rtheta;
-	double dx, dy, dist;
-	
-	
-	//defender's position
-	rx = (Robot_Data[0][0] + Robot_Data[1][0]) / 2;
-	ry = (Robot_Data[0][1] + Robot_Data[1][1]) / 2;
-	rtheta = Robot_Data[0][2];
-	
+void navigate_to_target(robot* defender, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data, double hide_x, double hide_y, int& pw_l, int& pw_r) {
+	double rx = defender->x[2];
+	double ry = defender->x[3];
+	double rtheta = defender->x[1];
+
 	const double PI = 3.14159265358979323846;
-	
-	dx = hide_x - rx;
-	dy = hide_y - ry;
-	
-	dist = sqrt(dx * dx + dy * dy);
-	
+
+	double dx = hide_x - rx;
+	double dy = hide_y - ry;
+
+	double dist = sqrt(dx * dx + dy * dy);
+
 	// Obstacle repulsion
 	double repulse_x = 0;
 	double repulse_y = 0;
@@ -651,7 +649,7 @@ void navigate_to_target(array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>
 
 	dx += repulse_x;
 	dy += repulse_y;
-	
+
 
 	double angle_to_target = atan2(dy, dx);
 	double angle_diff = angle_to_target - rtheta;
@@ -659,37 +657,25 @@ void navigate_to_target(array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>
 	while (angle_diff > PI) angle_diff -= 2 * PI;
 	while (angle_diff < -PI) angle_diff += 2 * PI;
 
+
 	//if more than 80 pixels away, forward_speed = 0.5
 	//if less, forward_speed = 0.2
-	//double forward_speed = (dist > 80) ? 0.5 : 0.2;
-	//double turn_speed = 0.3;
+	double forward_speed = (dist > 80) ? 0.5 : 0.2;
+	double turn_speed = 0.3;
 
 
-	 // Thresholds
-	
-	const double dist_thresh = 5;
-
-	// Rotation in place
-	if (fabs(angle_diff) > 0.1) {
-		if (angle_diff > 0) {
-			pw_l = 2000; pw_r = 1000;
-		}
-		else {
-			pw_l = 1000; pw_r = 2000;
-		}
+	//if not facing target within 0.1rad (6deg), turn
+	if (angle_diff > 0.1) {
+		defender->set_inputs(1500 - forward_speed * 400, 1500 + turn_speed * 400, 1500, 0);
 	}
-	// Move forward if facing the right direction
-	else if (dist > dist_thresh) {
-		pw_l = 1600;
-		pw_r = 1600;
+	else if (angle_diff < -0.1) {
+		defender->set_inputs(1500 + turn_speed * 400, 1500 - forward_speed * 400, 1500, 0);
 	}
 	else {
-		pw_l = 1500;
-		pw_r = 1500;
+		defender->set_inputs(1500 + forward_speed * 400, 1500 + forward_speed * 400, 1500, 0);
 	}
-	set_inputs(pw_l, pw_r, 1500, 0, 100);
 
-	/*const int pw_base = 1500;
+	const int pw_base = 1500;
 	const int max_delta = 500;
 
 	int speed = (int)(dist * 5);
@@ -703,20 +689,17 @@ void navigate_to_target(array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>
 		turn /= 2;
 	}
 
-
 	pw_l = pw_base - speed + turn;
 	pw_r = pw_base + speed + turn;
+
 	if (pw_l < 1000) pw_l = 1000;
 	if (pw_l > 2000) pw_l = 2000;
 	if (pw_r < 1000) pw_r = 1000;
 	if (pw_r > 2000) pw_r = 2000;
-	set_inputs(pw_l, pw_r, 1500, 0, 100);*/
-
-	
 }
 
 
-void Defence_Sequence(image& rgb, int& pw_l, int& pw_r, char Player) {
+void Defence_Sequence(robot* defender, image& rgb, int& pw_l, int& pw_r, char Player, int& pw_l_o, int& pw_r_o) {
 	int height, width, nlabelBW, nlabelColour;
 	static vector <array <int, 6>> Bulk_Data; //Using vector to be able to scale the number of rows to the number of objects
 	static array<array<int, 6>, 2> Robot_Data; //Using array notation to be able to use the function of array a = array b instead of using pointer notation
@@ -766,10 +749,12 @@ void Defence_Sequence(image& rgb, int& pw_l, int& pw_r, char Player) {
 	opponent_x = (Opponent_Data[0][0] + Opponent_Data[1][0]) / 2;
 	opponent_y = (Opponent_Data[0][1] + Opponent_Data[1][1]) / 2;
 
+	opponent_loop_path(Opponent_Data, pw_l_o, pw_r_o);
+
 	if (exposed) {
 		find_hiding_position(Robot_Data, Opponent_Data, Obstacle_Data, hide_x, hide_y);
 	}
-	navigate_to_target(Robot_Data, Opponent_Data, Obstacle_Data, hide_x, hide_y, pw_l, pw_r);
+	navigate_to_target(defender, Robot_Data, Opponent_Data, Obstacle_Data, hide_x, hide_y, pw_l, pw_r);
 	
 	last_opp_x = opponent_x;
 	last_opp_y = opponent_y;
@@ -779,65 +764,122 @@ void Defence_Sequence(image& rgb, int& pw_l, int& pw_r, char Player) {
 	free_image(ProcessingImage);
 }
 
+void opponent_loop_path(array<array<int, 6>, 2>& Opponent_Data, int& pw_l_o, int& pw_r_o) {
 
-//Marc's functions
-void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
-    const int width = label.width;
-    const int height = label.height;
-	
-    // Define a scan zone in front of the robot
-    const int safe_distance_px = 30;
-    const int scan_width = 5;
-	
-	// Get robot's current position and heading
-    double theta = my_robot->x[1];
-    double rx = my_robot->x[2];
-    double ry = my_robot->x[3];
+	static int phase = 1;
+	const double PI = 3.14159265358979323846;
+	// Robot current position
+	double opponent_x = (Opponent_Data[0][0] + Opponent_Data[1][0]) / 2;
+	double opponent_y = (Opponent_Data[0][1] + Opponent_Data[1][1]) / 2;
+	double rtheta = atan2(Opponent_Data[0][1] - Opponent_Data[1][1],
+		Opponent_Data[0][0] - Opponent_Data[1][0]);
 
-    i2byte* pl = (i2byte*)label.pdata;
+	// ---- PHASE 1: (150, 375) -> (480, 375)
+	if (phase == 1) {
+		double dx = 480 - opponent_x;
+		double dy = 375 - opponent_y;
+		double dist = sqrt(dx * dx + dy * dy);
+		double angle_to_target = atan2(dy, dx);
+		double angle_diff = angle_to_target - rtheta;
 
-    // project forward points in a fan shape
-    // check within range of 10 to 30 pixels if there are any objects in the way
-    for (int r = 10; r <= safe_distance_px; r += 2) {
-        for (int offset = -scan_width; offset <= scan_width; offset++) {
-            double angle = theta + offset * 0.05;
-            int i = (int)(rx + r * cos(angle));
-            int j = (int)(ry + r * sin(angle));
+		while (angle_diff > PI) angle_diff -= 2 * PI;
+		while (angle_diff < -PI) angle_diff += 2 * PI;
 
-            //check for screen boundaries
-            if (i < 0 || i >= width || j < 0 || j >= height) {
-                // Near screen edge: back up and turn slightly
-                pw_l = 1300;
-                pw_r = 1700;
-                return;
-            }
-
-            // check for objectts
-            int label_val = pl[j * width + i];
-            if (label_val != 0) {
-                // Something is directly ahead!
-                cout << "\n[Vision Collision] Label detected at (" << i << ", " << j << ") = " << label_val;
-
-        	int delta_l = abs(pw_l - 1500);
-		int delta_r = abs(pw_r - 1500);
-
-                if (((delta_l > delta_r) && (pw_l > pw_r)) || ((delta_l < delta_r) && (pw_l < pw_r))){
-                    // turning left -> turn harder left
-                    pw_l = 2000; // backwards left
-                    pw_r = 2000; // forward right
-                } else if (((delta_l > delta_r) && (pw_l < pw_r)) || ((delta_l < delta_r) && (pw_l > pw_r))){
-                    // turning right -> turn harder right
-                    pw_l = 1000; // forward left
-                    pw_r = 1000; // backwards right
-                } else if( (delta_l == delta_r) && (pw_l != pw_r) && ( pw_l < 1500 && pw_r > 1500) ){
-		    // if velocity was forward -> turns backwards
-		    pw_l = 2000; // backwards left
-		    pw_r = 1000; // backwards right 
+		int turn = (int)(angle_diff * 500);
+		if (dist > 40.0) {
+			if (fabs(angle_diff) > 0.3) {
+				pw_l_o = 1300 + turn;
+				pw_r_o = 1700 + turn;
+			}
+			else {
+				pw_l_o = 1000  ;
+				pw_r_o = 2000  ;
+			}
 		}
-		return;
-            }
-        }
-    }
+		else {
+			phase = 2;
+		}
+	}
+
+	// ---- PHASE 2: (480, 375) -> (480, 80)
+	else if (phase == 2) {
+		double dx = 480 - opponent_x;
+		double dy = 80 - opponent_y;
+		double dist = sqrt(dx * dx + dy * dy);
+		double angle_to_target = atan2(dy, dx);
+		double angle_diff = angle_to_target - rtheta;
+
+		while (angle_diff > PI) angle_diff -= 2 * PI;
+		while (angle_diff < -PI) angle_diff += 2 * PI;
+		int turn = (int)(angle_diff * 500);
+		if (dist > 40.0) {
+			if (fabs(angle_diff) > 0.3) {
+				pw_l_o = 1300 + turn;
+				pw_r_o = 1700 + turn;
+			}
+			else {
+				pw_l_o = 1000  ;
+				pw_r_o = 2000  ;
+			}
+		}
+		else {
+			phase = 3;
+		}
+	}
+
+	// ---- PHASE 3: (480, 80) -> (60, 80)
+	else if (phase == 3) {
+		double dx = 60 - opponent_x;
+		double dy = 80 - opponent_y;
+		double dist = sqrt(dx * dx + dy * dy);
+		double angle_to_target = atan2(dy, dx);
+		double angle_diff = angle_to_target - rtheta;
+
+		while (angle_diff > PI) angle_diff -= 2 * PI;
+		while (angle_diff < -PI) angle_diff += 2 * PI;
+
+		int turn = (int)(angle_diff * 500);
+		if (dist > 40.0) {
+			if (fabs(angle_diff) > 0.3) {
+				pw_l_o = 1300 + turn;
+				pw_r_o = 1700 + turn;
+			}
+			else {
+				pw_l_o = 1000;
+				pw_r_o = 2000;
+			}
+		}
+		else {
+			phase = 4;
+		}
+	}
+
+	// ---- PHASE 4: (60, 80) -> (60, 480)
+	else if (phase == 4) {
+		double dx = 60 - opponent_x;
+		double dy = 480 - opponent_y;
+		double dist = sqrt(dx * dx + dy * dy);
+		double angle_to_target = atan2(dy, dx);
+		double angle_diff = angle_to_target - rtheta;
+
+		while (angle_diff > PI) angle_diff -= 2 * PI;
+		while (angle_diff < -PI) angle_diff += 2 * PI;
+
+		int turn = (int)(angle_diff * 500);
+		if (dist > 40.0) {
+			if (fabs(angle_diff) > 0.2) {
+				pw_l_o = 1300 + turn;
+				pw_r_o = 1700 + turn;
+			}
+			else {
+				pw_l_o = 1000;
+				pw_r_o = 2000;
+			}
+		}
+		else {
+			phase = 1; // Loop back to phase 1
+		}
+	}
 }
 
 

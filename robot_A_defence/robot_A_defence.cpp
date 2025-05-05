@@ -21,7 +21,7 @@ using namespace std;
 #include "Team_functions.h"
 #include "Example.h"
 
-extern robot_system S1;
+extern robot_system *S1;
 
 int main()
 {
@@ -54,11 +54,11 @@ int main()
 	x_obs[1] = 135; // pixels
 	y_obs[1] = 135; // pixels
 
-//	x_obs[2] = 185; // pixels
-//	y_obs[2] = 135; // pixels
+	//x_obs[2] = 485; // pixels
+	//y_obs[2] = 135; // pixels
 
-//	x_obs[3] = 185; // pixels
-//	y_obs[3] = 400; // pixels
+	//x_obs[3] = 585; // pixels
+	//y_obs[3] = 400; // pixels
 
 //	x_obs[4] = 450; // pixels
 //	y_obs[4] = 350; // pixels
@@ -96,9 +96,9 @@ int main()
 	set_robot_position(x0,y0,theta0);
 	
 	// set opponent initial position (pixels) and angle (rad)
-	x0_o = 75;
-	y0_o = 150;
-	theta0_o = 1.5708;
+	x0_o = 150;
+	y0_o = 375;
+	theta0_o = 3.14159 / 4;
 	set_opponent_position(x0_o,y0_o,theta0_o);
 
 	// set initial inputs / on-line adjustable parameters /////////
@@ -117,8 +117,8 @@ int main()
 	set_inputs(pw_l,pw_r,pw_laser,laser,max_speed);
 
 	// opponent inputs (No initial movement)
-	pw_l_o = 1500; // pulse width for left wheel servo (us)
-	pw_r_o = 1500; // pulse width for right wheel servo (us)
+	pw_l_o = 1300; // pulse width for left wheel servo (us)
+	pw_r_o = 1600; // pulse width for right wheel servo (us)
 	pw_laser_o = 1500; // pulse width for laser servo (us)
 	laser_o = 0; // laser input (0 - off, 1 - fire)
 
@@ -156,7 +156,7 @@ int main()
 	cout << "\n\nTo run the program against the enemy with behaviour controlled by a keyboard, press 2.";
 	cout << "\n\nOnce an opponent is selected, press 'Enter' to begin\n";
 
-	while (true) {
+	/*while (true) {
 		cin >> opponent_mode;
 
 		if (opponent_mode == 1 || opponent_mode == 2) {
@@ -166,7 +166,7 @@ int main()
 			cout << "\n\n This input is not valide. Please enter 1 or 2";
 				opponent_mode = 0;
 		}
-	}
+	}*/
 	
 	while(1) {
 
@@ -175,11 +175,11 @@ int main()
 		tc = high_resolution_time() - tc0;
 
 		//Control our robot
-		Defence_Sequence(rgb, pw_l, pw_r, Player);
-		set_inputs(pw_l,pw_r,pw_laser,laser,max_speed);
+		Defence_Sequence(S1->P[1], rgb, pw_l, pw_r, Player, pw_l_o, pw_r_o);
+		S1->P[1]->set_inputs(pw_l,pw_r,pw_laser,laser);
 
 		//Control opponent robot
-		Example_KeyboardInput(pw_l_o, pw_r_o);
+		//Example_KeyboardInput(pw_l_o, pw_r_o);
 		set_opponent_inputs(pw_l_o, pw_r_o, pw_laser_o, laser_o, opponent_max_speed);
 		
 		

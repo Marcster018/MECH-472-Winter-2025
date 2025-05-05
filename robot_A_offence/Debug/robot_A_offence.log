@@ -1,56 +1,70 @@
-﻿  Example.cpp
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.h(37,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
+﻿  robot_A_offence.cpp
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.h(38,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
+  (compiling source file 'robot_A_offence.cpp')
+  
+  robot.cpp
+  shared_memory.cpp
+  Example.cpp
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.h(38,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
   (compiling source file 'Example.cpp')
   
   Team_functions.cpp
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.h(37,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.h(38,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
   (compiling source file 'Team_functions.cpp')
   
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(26,6): warning C4101: 'height': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(26,14): warning C4101: 'width': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(117,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(118,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(123,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(124,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(129,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(130,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(135,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(136,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(89,9): warning C4101: 'j': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(89,6): warning C4101: 'i': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(195,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(196,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(205,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(206,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(252,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(237,16): warning C4101: 'plc': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(236,6): warning C4101: 'k': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(236,12): warning C4101: 'j': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(236,9): warning C4101: 'i': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(316,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(317,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(367,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(368,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(353,9): warning C4101: 'j': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(353,6): warning C4101: 'i': unreferenced local variable
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1173,37): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1173,37): warning C4244:         with
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1173,37): warning C4244:         [
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1173,37): warning C4244:             _Ty=int
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1173,37): warning C4244:         ]
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1174,39): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1174,39): warning C4244:         with
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1174,39): warning C4244:         [
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1174,39): warning C4244:             _Ty=int
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1174,39): warning C4244:         ]
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1181,16): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1187,16): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1212,16): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1216,16): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1220,16): warning C4018: '<': signed/unsigned mismatch
-  robot_A_offence.cpp
-C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.h(37,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
-  (compiling source file 'robot_A_offence.cpp')
-  
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(26,6): warning C4101: 'height': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(26,14): warning C4101: 'width': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(116,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(117,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(122,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(123,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(128,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(129,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(134,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(135,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(88,9): warning C4101: 'j': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(88,6): warning C4101: 'i': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(194,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(195,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(204,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(205,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(251,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(236,16): warning C4101: 'plc': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(235,6): warning C4101: 'k': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(235,12): warning C4101: 'j': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(235,9): warning C4101: 'i': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(315,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(316,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(366,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(367,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(352,9): warning C4101: 'j': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(352,6): warning C4101: 'i': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(802,16): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1185,37): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1185,37): warning C4244:         with
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1185,37): warning C4244:         [
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1185,37): warning C4244:             _Ty=int
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1185,37): warning C4244:         ]
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1186,39): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1186,39): warning C4244:         with
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1186,39): warning C4244:         [
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1186,39): warning C4244:             _Ty=int
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1186,39): warning C4244:         ]
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1193,16): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1200,16): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1210,16): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1231,16): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1235,16): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1239,16): warning C4018: '<': signed/unsigned mismatch
+  timer.cpp
+  update_simulation.cpp
+  vision.cpp
+  vision_simulation.cpp
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\vision_simulation.cpp(495,24): warning C4101: 'q4': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\vision_simulation.cpp(495,14): warning C4101: 'q2': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\vision_simulation.cpp(495,29): warning C4101: 'q5': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\vision_simulation.cpp(495,19): warning C4101: 'q3': unreferenced local variable
   Generating Code...
-  robot_A_offence.vcxproj -> C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Debug\robot_A_offence.exe
+image_transfer.lib(image_transfer.obj) : warning LNK4099: PDB '' was not found with 'image_transfer.lib(image_transfer.obj)' or at ''; linking object as if no debug info
+image_transfer.lib(Video_IO.obj) : warning LNK4099: PDB '' was not found with 'image_transfer.lib(Video_IO.obj)' or at ''; linking object as if no debug info
+  robot_A_offence.vcxproj -> C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Debug\robot_A_offence.exe

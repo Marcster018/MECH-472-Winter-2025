@@ -49,13 +49,16 @@ void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser
 
 	copy(rgb, ProcessingImage);
 
+	//Converting to Greyscale
 	Process_Image(ProcessingImage, LabelImageBW, LabelImageColour, nlabelBW, nlabelColour);
 
+	//Converting to Label Image
 	Get_Image_Data(rgb,LabelImageBW,LabelImageColour, nlabelBW,nlabelColour,Bulk_Data);
 
+	//Converting objects from Label Image into object types
 	Classify_Data(rgb, LabelImageBW, LabelImageColour, nlabelBW, nlabelColour, Bulk_Data, Robot_Data, Opponent_Data, Obstacle_Data, Player);
 
-	Classify_Data_Troubleshooting(rgb, Robot_Data, Opponent_Data, Obstacle_Data);
+	//Classify_Data_Troubleshooting(rgb, Robot_Data, Opponent_Data, Obstacle_Data);
 
 	//detect_obstruction(Ic, Jc, ObsLabel, rgb, label, detected);
 
@@ -321,7 +324,7 @@ void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image
 			int i = k % width;
 			int j = (k - i) / width;
 			if (abs(i - (int)cr_x) <= 1) {
-				draw_point_rgb(rgb, i, j, 255, 0, 0);
+				//draw_point_rgb(rgb, i, j, 255, 0, 0);
 				for (int a : OL) {
 					if (pl[k] == a) obstruction = true;
 				}
@@ -339,7 +342,7 @@ void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image
 			int j = (k - i) / width;
 			float y = i * m + b;
 			if (abs(j - (int)y) <= 1) {
-				draw_point_rgb(rgb, i, j, 255, 0, 0);
+				//draw_point_rgb(rgb, i, j, 255, 0, 0);
 				for (int a : OL) {
 					if (pl[k] == a) obstruction = true;
 				}
@@ -411,6 +414,7 @@ void go_to(int Ic[4], int Jc[4], int& pw_l, int& pw_r, image& rgb, image& label,
 }
 
 //Fred's functions
+
 /*
 int auto_select_shape_by_size(i2byte& nlabel, image& label)
 // select an object from a binary image based on its area
@@ -692,7 +696,7 @@ void navigate_to_target(robot* defender, double hide_x, double hide_y, image& rg
 }
 */
 /*
-void dynamic_hide(robot* defender, image& rgb, image& rgb0, image& label, image& a, image& b, int& pw_l, int& pw_r) {
+void dynamic_hide(int defender, image& rgb, image& rgb0, image& label, image& a, image& b, int& pw_l, int& pw_r) {
 	int Ic[4], Jc[4], nlabel;
 	static double hide_x = 0;
 	static double hide_y = 0;
@@ -732,18 +736,19 @@ void dynamic_hide(robot* defender, image& rgb, image& rgb0, image& label, image&
 */
 
 //Marc's functions
-void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
+void Collision_Detection(array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data, image& label, int& pw_l, int& pw_r) {
     const int width = label.width;
     const int height = label.height;
+	bool Obstruction;
 	
     // Define a scan zone in front of the robot
     const int safe_distance_px = 30;
     const int scan_width = 5;
 	
 	// Get robot's current position and heading
-    double theta = my_robot->x[1];
-    double rx = my_robot->x[2];
-    double ry = my_robot->x[3];
+    double theta = Robot_Data[0][2];
+    double rx = (Robot_Data[0][0]+ Robot_Data[1][0])/2;
+	double ry = (Robot_Data[0][1] + Robot_Data[0][1]) / 2;
 
     i2byte* pl = (i2byte*)label.pdata;
 
@@ -763,29 +768,29 @@ void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
                 return;
             }
 
-            // check for objectts
-            int label_val = pl[j * width + i];
-            if (label_val != 0) {
+            // check for objects
+            Obstruction = ObstacleAtLocation(i,j,Obstacle_Data);
+            if (Obstruction) {
                 // Something is directly ahead!
-                cout << "\n[Vision Collision] Label detected at (" << i << ", " << j << ") = " << label_val;
+               // cout << "\n[Vision Collision] Label detected at (" << i << ", " << j << ")";
 
-        	int delta_l = abs(pw_l - 1500);
-		int delta_r = abs(pw_r - 1500);
+        		int delta_l = abs(pw_l - 1500);
+				int delta_r = abs(pw_r - 1500);
 
-                if (((delta_l > delta_r) && (pw_l > pw_r)) || ((delta_l < delta_r) && (pw_l < pw_r))){
+				if (((delta_l > delta_r) && (pw_l > pw_r)) || ((delta_l < delta_r) && (pw_l < pw_r))){
                     // turning left -> turn harder left
                     pw_l = 2000; // backwards left
                     pw_r = 2000; // forward right
-                } else if (((delta_l > delta_r) && (pw_l < pw_r)) || ((delta_l < delta_r) && (pw_l > pw_r))){
+				} else if (((delta_l > delta_r) && (pw_l < pw_r)) || ((delta_l < delta_r) && (pw_l > pw_r))){
                     // turning right -> turn harder right
                     pw_l = 1000; // forward left
                     pw_r = 1000; // backwards right
-                } else if( (delta_l == delta_r) && (pw_l != pw_r) && ( pw_l < 1500 && pw_r > 1500) ){
-		    // if velocity was forward -> turns backwards
-		    pw_l = 2000; // backwards left
-		    pw_r = 1000; // backwards right 
-		}
-		return;
+				} else if( (delta_l == delta_r) && (pw_l != pw_r) && ( pw_l < 1500 && pw_r > 1500) ){
+				// if velocity was forward -> turns backwards
+				pw_l = 2000; // backwards left
+				pw_r = 1000; // backwards right 
+				}
+				return;
             }
         }
     }
@@ -794,6 +799,18 @@ void Collision_Detection(robot* my_robot, image& label, int& pw_l, int& pw_r) {
 
 //Jacob Functions
 
+//Determine if there is an obstacle at a given location
+static bool ObstacleAtLocation(int I, int J, vector<array<int, 6>>& Obstacle_Data) {
+	int k;
+
+	//Check to see if any Obstacle is at location (I, J)
+	for (k = 0; k < Obstacle_Data.size(); k++) {
+		if (Obstacle_Data[k][0] == I && Obstacle_Data[k][1] == J) return 1; //If obstacle at (I, J) return true
+	}
+
+	//If no obstacle at (I, J), return false
+	return 0;
+}
 //Creates a greyscale image. Threshold set to identify black/dark items
 static void BWProcessing(image& InputImage, image& OutputImage) {
 	int width, height, Threshold;
@@ -1175,15 +1192,16 @@ static void Classify_Data(image&rgb, image& LabelImageBW, image& LabelImageColou
 	}
 
 	//Identify Obstacles
-	vector<int> Obstacle_Objects; //1D dynamic array
+	vector<int> Obstacle_Objects; //1D dynamic array containing the object number of the obstacles
 	find_obstacles(rgb, LabelImageColour, TempImageA, nlabelColour, Obstacle_Objects);
 	
 	for (i = 0; i < Obstacle_Objects.size(); i++) {
 		Obstacle_Objects[i] += nlabelBW; //Increment each label number by the number of BW labels since the BW labels come before the Colour labels in Bulk_Data
 	}
 
-	Obstacle_Data.resize(Obstacle_Objects.size());
+	Obstacle_Data.resize(Obstacle_Objects.size()); //Size obstacle_data to prevent out-of-range errors
 
+	//Of the objects identified as obstacles, only the objects which are "NotGrey" are actually obstacles
 	for (i = 0; i < Obstacle_Objects.size(); i++) {
 		j = Obstacle_Objects[i] - 1;
 		if (NotGrey(Bulk_Data[j][3], Bulk_Data[j][4], Bulk_Data[j][5])) {
@@ -1191,7 +1209,13 @@ static void Classify_Data(image&rgb, image& LabelImageBW, image& LabelImageColou
 			accumulator++;
 		}
 	}
-	Obstacle_Data.resize(accumulator);
+	Obstacle_Data.resize(accumulator); //Truncate the trailing rows of 0s
+	
+	//Add obstacle size data to the Obstacle_Data
+	for (i = 0; i < Obstacle_Data.size(); i++) {
+		Obstacle_Data[i][2] = static_cast <int>(ceil(estimate_radius_from_image(LabelImageColour, Obstacle_Data[i][0], Obstacle_Data[i][1]))); //Want the round-up integer size of the obstacle
+	}
+
 	//Release image memory
 	free_image(TempImageA);
 	free_image(TempImageB);
