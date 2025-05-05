@@ -315,14 +315,19 @@ void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image
 	float dx = cr_x - cd_x;
 	float dy = cr_y - cd_y;
 
+	int X[2] = { min(cr_x,cd_x),max(cr_x,cd_x) };
+	int Y[2] = { min(cr_y,cd_y),max(cr_y,cd_y) };
+
 	if (dx == 0) {
 		for (int k = 0; k < size; k++) {
 			int i = k % width;
 			int j = (k - i) / width;
-			if (abs(i - (int)cr_x) <= 1) {
-				//draw_point_rgb(rgb, i, j, 255, 0, 0);
-				for (int a : OL) {
-					if (pl[k] == a) obstruction = true;
+			if (i > X[0] && i<X[1] && j>Y[0] && j < Y[1]) {
+				if (abs(i - (int)cr_x) <= 1) {
+					draw_point_rgb(rgb, i, j, 255, 0, 0);
+					for (int a : OL) {
+						if (pl[k] == a) obstruction = true;
+					}
 				}
 			}
 		}
@@ -337,12 +342,15 @@ void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image
 			int i = k % width;
 			int j = (k - i) / width;
 			float y = i * m + b;
-			if (abs(j - (int)y) <= 1) {
-				//draw_point_rgb(rgb, i, j, 255, 0, 0);
-				for (int a : OL) {
-					if (pl[k] == a) obstruction = true;
+			if (i > X[0] && i<X[1] && j>Y[0] && j < Y[1]) {
+				if (abs(j - (int)y) <= 1) {
+					draw_point_rgb(rgb, i, j, 255, 0, 0);
+					for (int a : OL) {
+						if (pl[k] == a) obstruction = true;
+					}
 				}
 			}
+
 		}
 	}
 	detected = obstruction;
@@ -407,6 +415,79 @@ void go_to(int Ic[4], int Jc[4], int& pw_l, int& pw_r, image& rgb, image& label,
 		}
 	}
 
+}
+
+void find_path(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image& label, int& id, int& jd) {
+	//draw to lines one vertical and horizontal and see if you mvoe there it is in the clear
+	int width = rgb.width;
+	int height = rgb.height;
+	i2byte* pl = (i2byte*)label.pdata;
+
+	bool invalidh = false;
+	bool invalidv = false;
+
+	int x1 = Ic[0];
+	int y1 = Jc[0];
+	int x2 = (Ic[2] + Ic[3]) / 2;
+	int y2 = (Jc[2] + Jc[3]) / 2;
+	int ix = x2;
+	int jy = y2;
+
+	int xs = min(x1, x2);
+	int xe = max(x1, x2);
+	int ys = min(y1, y2);
+	int ye = max(y1, y2);
+
+	// Increase the search space in steps
+	for (int step = 0; step < 50; step++) {
+		xs = xs - step;
+		xe = xe + step;
+		ys = ys - step;
+		ye = ye + step;
+
+		//boundaries
+		if (xs < 0) xs = 0;
+		if (xe >= width) xe = width - 1;
+		if (ys < 0) ys = 0;
+		if (ye >= height) ye = height - 1;
+
+		//horizontal
+		for (int i = xs; i <= xe; i++) {
+			int k = i + jy * width;
+			if (pl[k] != 0) {
+				invalidh = true;
+				break;
+			}
+		}
+
+		//vertical
+		for (int j = ys; j <= ye; j++) {
+			int k = ix + j * width;
+			if (pl[k] != 0) {
+				invalidv = true;
+				break;
+			}
+		}
+
+		// horizontal clear, vertical blocked
+		if (!invalidh && invalidv) {
+			id = x2 + step; 
+			jd = y1;         
+			break;
+		}
+		// horizontal blocked, vertical clear
+		else if (invalidh && !invalidv) {
+			id = x1;         
+			jd = y2 + step;  
+			break;
+		}
+		// both clear
+		else if (!invalidh && !invalidv) {
+			id = x2 + step; 
+			jd = y1;        
+			break;
+		}
+	}
 }
 
 //Fred's functions

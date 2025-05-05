@@ -14,6 +14,7 @@ void find_obstacles(image& rgb, image& label, image& a, int nlabel, vector<int>&
 void opponent_track(int Ic[4], int Jc[4], image& rgb, image& label, int& pw_r, int& pw_l);
 void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image& label, bool& detected);
 void go_to(int Ic[4], int Jc[4], int& pw_l, int& pw_r, image& rgb, image& label, int id, int jd);
+void find_path(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image& label, int& id, int& jd);
 
 //Fred functions
 //int auto_select_shape_by_size(i2byte& nlabel, image& label);
