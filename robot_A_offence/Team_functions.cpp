@@ -29,7 +29,7 @@ void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser
 	static array<array<int, 6>, 2> Opponent_Data;//Using array notation to be able to use the function of array a = array b instead of using pointer notation
 	static vector <array <int, 6>> Obstacle_Data;//Using vector to be able to scale the number of rows to the number of objects
 	bool detected = false;
-	image ProcessingImage, LabelImageBW, LabelImageColour;
+	image ProcessingImage, LabelImageBW, LabelImageColour,a;
 
 	ProcessingImage.type = RGB_IMAGE;
 	ProcessingImage.width = rgb.width;
@@ -43,9 +43,14 @@ void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser
 	LabelImageColour.width = rgb.width;
 	LabelImageColour.height = rgb.height;
 
+	a.type = GREY_IMAGE;
+	a.width = rgb.width;
+	a.height = rgb.height;
+
 	allocate_image(LabelImageBW);
 	allocate_image(LabelImageColour);
 	allocate_image(ProcessingImage);
+	allocate_image(a);
 
 	copy(rgb, ProcessingImage);
 
@@ -67,7 +72,18 @@ void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser
 	Collision_Detection(rgb, Robot_Data, Opponent_Data, Obstacle_Data, pw_l, pw_r);
 
 	//Hunt defender
-
+	int Ic[4], Jc[4];
+	vector<int> OL;
+	copy(ProcessingImage, a);
+	find_hollow_circles(nlabelBW, LabelImageBW, a, rgb, Ic, Jc);
+	find_obstacles(rgb, LabelImageColour, a, nlabelColour, OL);
+	detect_obstruction(Ic, Jc, OL, rgb, LabelImageColour,detected);
+	if (detected == false) opponent_track(Ic, Jc, rgb, LabelImageBW, pw_r, pw_l);
+	else{
+		int id, jd;
+		quadrant(Ic, Jc, rgb, id, jd);
+		go_to(Ic, Jc, pw_l, pw_r, rgb, id, jd);
+	}
 
 	//pause();
 
@@ -77,7 +93,7 @@ void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser
 }
 
 //Anthony's functions
-void find_hollow_circles(int& nlabels, image& rgb, image& label, image&a, image& rgb0, int Ic[4], int Jc[4]) {
+void find_hollow_circles(int& nlabels, image& label, image&a, image& rgb0, int Ic[4], int Jc[4]) {
 	ibyte* p, * pc;
 	i2byte* pl, * plc;
 
@@ -85,13 +101,11 @@ void find_hollow_circles(int& nlabels, image& rgb, image& label, image&a, image&
 
 	pl = (i2byte*)label.pdata;
 
-	int i, j, width, height;
+	int i, j,height;
 	double ic, jc;
 	int kc;
 
-	width = rgb.width;
-	height = rgb.height;
-
+	int width = rgb0.width;
 	p = rgb0.pdata;
 
 
@@ -112,25 +126,25 @@ void find_hollow_circles(int& nlabels, image& rgb, image& label, image&a, image&
 
 			//green
 			if (R < 120 && G >120 && B < 150) {
-				//draw_point_rgb(rgb, ic, jc, 0, 255, 0);
+				//draw_point_rgb(rgb0, ic, jc, 255, 255, 255);
 				Ic[0] = ic;
 				Jc[0] = jc;
 			}
 			//Red
 			else if (R > 100 && G < 100 && B < 100) {
-				//draw_point_rgb(rgb, ic, jc, 255, 0, 0);
+				//draw_point_rgb(rgb0, ic, jc, 255, 255, 255);
 				Ic[1] = ic;
 				Jc[1] = jc;
 			}
 			//orange
 			else if (R > 220 && G > 130 && G < 200 && B < 150) {
-				//draw_point_rgb(rgb, ic, jc, 255, 100, 0);
+				//draw_point_rgb(rgb0, ic, jc, 255, 255, 255);
 				Ic[2] = ic;
 				Jc[2] = jc;
 			}
 			//blue
 			else if (R < 60 && G < 175 && B > 200) {
-				//draw_point_rgb(rgb, ic, jc, 0, 0, 255);
+				//draw_point_rgb(rgb0, ic, jc, 255, 255, 255);
 				Ic[3] = ic;
 				Jc[3] = jc;
 			}
@@ -214,10 +228,11 @@ void find_obstacles(image& rgb, image& label, image& a, int nlabel, vector<int>&
 		}
 
 		float diff = max - min;
-		if (diff < 3 && diff>0) {//by trial and error below 3 were the obstacles for diff
+
+		if (diff < 3 && diff>0 &&min>10) {//by trial and error below 3 were the obstacles for diff and min 10 is to remove noise
 			OL.push_back(l);
 			centroid(a, label, l, ic, jc);
-			//draw_point_rgb(rgb, ic, jc, 255, 0, 0); //For Troubleshooting
+			draw_point_rgb(rgb, ic, jc, 255, 0, 0); //For Troubleshooting
 		}
 	}
 }
@@ -290,7 +305,7 @@ void opponent_track(int Ic[4], int Jc[4], image& rgb, image& label, int& pw_r, i
 	}
 
 	//drawing point
-	draw_point_rgb(rgb, id, jd, 255, 0, 255); //draw point of where the robot looks
+	//draw_point_rgb(rgb, id, jd, 255, 0, 255); //draw point of where the robot looks
 
 }
 
@@ -315,19 +330,14 @@ void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image
 	float dx = cr_x - cd_x;
 	float dy = cr_y - cd_y;
 
-	int X[2] = { min(cr_x,cd_x),max(cr_x,cd_x) };
-	int Y[2] = { min(cr_y,cd_y),max(cr_y,cd_y) };
-
 	if (dx == 0) {
 		for (int k = 0; k < size; k++) {
 			int i = k % width;
 			int j = (k - i) / width;
-			if (i > X[0] && i<X[1] && j>Y[0] && j < Y[1]) {
-				if (abs(i - (int)cr_x) <= 1) {
-					draw_point_rgb(rgb, i, j, 255, 0, 0);
-					for (int a : OL) {
-						if (pl[k] == a) obstruction = true;
-					}
+			if (abs(i - (int)cr_x) <= 1) {
+				//draw_point_rgb(rgb, i, j, 255, 0, 0);
+				for (int a : OL) {
+					if (pl[k] == a) obstruction = true;
 				}
 			}
 		}
@@ -342,152 +352,85 @@ void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image
 			int i = k % width;
 			int j = (k - i) / width;
 			float y = i * m + b;
-			if (i > X[0] && i<X[1] && j>Y[0] && j < Y[1]) {
-				if (abs(j - (int)y) <= 1) {
-					draw_point_rgb(rgb, i, j, 255, 0, 0);
-					for (int a : OL) {
-						if (pl[k] == a) obstruction = true;
-					}
+			if (abs(j - (int)y) <= 1) {
+				//draw_point_rgb(rgb, i, j, 255, 0, 0);
+				for (int a : OL) {
+					if (pl[k] == a) obstruction = true;
 				}
 			}
-
 		}
 	}
 	detected = obstruction;
 }
 
-void go_to(int Ic[4], int Jc[4], int& pw_l, int& pw_r, image& rgb, image& label, int id, int jd) {
+void go_to(int Ic[4], int Jc[4], int& pw_l, int& pw_r, image& rgb, int id, int jd) {
 	int i, j, k, width, size, height;
 	width = rgb.width;
 	height = rgb.height;
 	size = width * height;
 	bool locked = false;
-	i2byte* pl;
-	pl = (i2byte*)label.pdata;
-	k = id + jd * width;
 
-	if (pl[k] == 0) {
-		int ir = (Ic[0] + Ic[1]) / 2;
-		int jr = (Jc[0] + Jc[1]) / 2;
+	//draw_point_rgb(rgb, id, jd, 255, 0, 0);
 
-		int V[2] = { id - ir,jd - jr }; //V[0]=x, V[1]=y
-		float angle = atan2(V[1], V[0]);
-		float robot_angle = atan2(Jc[0] - Jc[1], Ic[0] - Ic[1]);
-		float angle_error = angle - robot_angle;
-
-		draw_point_rgb(rgb, id, jd, 200, 0, 0);
-
-		if (fabs(angle_error) > 0.05) {
-			if (angle_error > 0) {
-				pw_l = 2000;
-				pw_r = 2000;
-			}
-			else {
-				pw_l = 1000;
-				pw_r = 1000;
-			}
-			locked = false;
+	float angle_of_robot = atan2(Jc[0] - Jc[1], Ic[0] - Ic[1]);
+	float V[3]; //0-x, 1-y, 2-angle
+	V[0] = (Ic[0] - id);
+	V[1] = (Jc[0] - jd);
+	V[2] = atan2(jd - Jc[0], id - Ic[0]);
+	float angle_error = V[2] - angle_of_robot;
+	if (angle_error < -0.1) {
+		pw_l = 1000;
+		pw_r = 1000;
+	}
+	else if (angle_error > 0.1) {
+		pw_l = 2000;
+		pw_r = 2000;
+	}
+	else {
+		float tol = 10;
+		if (fabs(V[1]) > tol || fabs(V[0]) > tol) {
+			pw_l = 2000;
+			pw_r = 1000;
 		}
 		else {
 			pw_l = 1500;
 			pw_r = 1500;
-			locked = true;
-		}
-
-		int x_error = abs(id - Ic[0]);
-		int y_error = abs(jd - Jc[0]);
-
-		if (x_error > 10 && y_error > 10) {
-			if (locked == true) {
-				pw_l = 1000;
-				pw_r = 2000;
-			}
-		}
-		else if (x_error > 2 && y_error > 2) {
-			if (locked == true) {
-				pw_l = 1250;
-				pw_r = 1750;
-			}
-		}
-		else if (x_error > 1 && y_error < 1) {
-			pw_l = 1500;
-			pw_r = 1500;
 		}
 	}
-
 }
-
-void find_path(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image& label, int& id, int& jd) {
-	//draw to lines one vertical and horizontal and see if you mvoe there it is in the clear
+//this is a simplified patroling function
+void quadrant(int Ic[4], int Jc[4], image& rgb, int& id, int& jd) {
 	int width = rgb.width;
 	int height = rgb.height;
-	i2byte* pl = (i2byte*)label.pdata;
 
-	bool invalidh = false;
-	bool invalidv = false;
+	int cx = width / 2;
+	int cy = height / 2;
 
-	int x1 = Ic[0];
-	int y1 = Jc[0];
-	int x2 = (Ic[2] + Ic[3]) / 2;
-	int y2 = (Jc[2] + Jc[3]) / 2;
-	int ix = x2;
-	int jy = y2;
+	// Opponent's centroid
+	int rx = (Ic[2] + Ic[3]) / 2;
+	int ry = (Jc[2] + Jc[3]) / 2;
 
-	int xs = min(x1, x2);
-	int xe = max(x1, x2);
-	int ys = min(y1, y2);
-	int ye = max(y1, y2);
+	// Representative positions for each quadrant (Q1 to Q4)
+	int Qx[4] = { 3 * cx / 2,     cx / 2,     cx / 2,    3 * cx / 2 };
+	int Qy[4] = { 3 * cy / 2, 3 * cy / 2,     cy / 2,        cy / 2 };
 
-	// Increase the search space in steps
-	for (int step = 0; step < 50; step++) {
-		xs = xs - step;
-		xe = xe + step;
-		ys = ys - step;
-		ye = ye + step;
-
-		//boundaries
-		if (xs < 0) xs = 0;
-		if (xe >= width) xe = width - 1;
-		if (ys < 0) ys = 0;
-		if (ye >= height) ye = height - 1;
-
-		//horizontal
-		for (int i = xs; i <= xe; i++) {
-			int k = i + jy * width;
-			if (pl[k] != 0) {
-				invalidh = true;
-				break;
-			}
-		}
-
-		//vertical
-		for (int j = ys; j <= ye; j++) {
-			int k = ix + j * width;
-			if (pl[k] != 0) {
-				invalidv = true;
-				break;
-			}
-		}
-
-		// horizontal clear, vertical blocked
-		if (!invalidh && invalidv) {
-			id = x2 + step; 
-			jd = y1;         
-			break;
-		}
-		// horizontal blocked, vertical clear
-		else if (invalidh && !invalidv) {
-			id = x1;         
-			jd = y2 + step;  
-			break;
-		}
-		// both clear
-		else if (!invalidh && !invalidv) {
-			id = x2 + step; 
-			jd = y1;        
-			break;
-		}
+	if (rx > cx && ry > cy) {        // Q1 (bottom-right)
+		id = Qx[2];  // move to Q3 (top-left)
+		jd = Qy[2];
 	}
+	else if (rx < cx && ry > cy) {   // Q2 (bottom-left)
+		id = Qx[3];  // move to Q4 (top-right)
+		jd = Qy[3];
+	}
+	else if (rx < cx && ry < cy) {   // Q3 (top-left)
+		id = Qx[0];  // move to Q1 (bottom-right)
+		jd = Qy[0];
+	}
+	else if (rx > cx && ry < cy) {   // Q4 (top-right)
+		id = Qx[1];  // move to Q2 (bottom-left)
+		jd = Qy[1];
+	}
+
 }
 
 //Fred's functions
@@ -1288,9 +1231,9 @@ static void Classify_Data(image&rgb, image& LabelImageBW, image& LabelImageColou
 	Obstacle_Data.resize(accumulator); //Truncate the trailing rows of 0s
 	
 	//Add obstacle size data to the Obstacle_Data
-	for (i = 0; i < Obstacle_Data.size(); i++) {
-		Obstacle_Data[i][2] = static_cast <int>(ceil(estimate_radius_from_image(LabelImageColour, Obstacle_Data[i][0], Obstacle_Data[i][1]))); //Want the round-up integer size of the obstacle
-	}
+	//for (i = 0; i < Obstacle_Data.size(); i++) {
+	//	Obstacle_Data[i][2] = static_cast <int>(ceil(estimate_radius_from_image(LabelImageColour, Obstacle_Data[i][0], Obstacle_Data[i][1]))); //Want the round-up integer size of the obstacle
+	//}
 
 	//Release image memory
 	free_image(TempImageA);

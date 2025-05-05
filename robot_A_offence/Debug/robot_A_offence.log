@@ -1,70 +1,76 @@
 ﻿  robot_A_offence.cpp
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.h(39,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.h(39,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
   (compiling source file 'robot_A_offence.cpp')
   
   robot.cpp
   shared_memory.cpp
   Example.cpp
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.h(39,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.h(39,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
   (compiling source file 'Example.cpp')
   
   Team_functions.cpp
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.h(39,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.h(39,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
   (compiling source file 'Team_functions.cpp')
   
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(26,6): warning C4101: 'height': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(26,14): warning C4101: 'width': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(116,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(117,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(122,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(123,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(128,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(129,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(134,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(135,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(88,9): warning C4101: 'j': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(88,6): warning C4101: 'i': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(194,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(195,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(204,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(205,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(251,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(236,16): warning C4101: 'plc': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(235,6): warning C4101: 'k': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(235,12): warning C4101: 'j': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(235,9): warning C4101: 'i': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(315,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(316,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(374,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(375,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(360,9): warning C4101: 'j': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(360,6): warning C4101: 'i': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(883,16): warning C4018: '<': signed/unsigned mismatch
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1266,37): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1266,37): warning C4244:         with
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1266,37): warning C4244:         [
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1266,37): warning C4244:             _Ty=int
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1266,37): warning C4244:         ]
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1267,39): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1267,39): warning C4244:         with
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1267,39): warning C4244:         [
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1267,39): warning C4244:             _Ty=int
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1267,39): warning C4244:         ]
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1274,16): warning C4018: '<': signed/unsigned mismatch
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1281,16): warning C4018: '<': signed/unsigned mismatch
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1291,16): warning C4018: '<': signed/unsigned mismatch
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1312,16): warning C4018: '<': signed/unsigned mismatch
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1316,16): warning C4018: '<': signed/unsigned mismatch
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Team_functions.cpp(1320,16): warning C4018: '<': signed/unsigned mismatch
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(26,6): warning C4101: 'height': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(26,14): warning C4101: 'width': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(130,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(131,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(136,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(137,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(142,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(143,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(148,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(149,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(104,11): warning C4101: 'height': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(104,9): warning C4101: 'j': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(104,6): warning C4101: 'i': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(208,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(209,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(218,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(219,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(235,28): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(235,24): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(266,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(251,16): warning C4101: 'plc': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(250,6): warning C4101: 'k': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(250,12): warning C4101: 'j': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(250,9): warning C4101: 'i': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(330,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(331,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(375,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(377,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(378,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(379,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(367,12): warning C4101: 'k': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(367,9): warning C4101: 'j': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(367,6): warning C4101: 'i': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(826,16): warning C4018: '<': signed/unsigned mismatch
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1209,37): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1209,37): warning C4244:         with
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1209,37): warning C4244:         [
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1209,37): warning C4244:             _Ty=int
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1209,37): warning C4244:         ]
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1210,39): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1210,39): warning C4244:         with
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1210,39): warning C4244:         [
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1210,39): warning C4244:             _Ty=int
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1210,39): warning C4244:         ]
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1217,16): warning C4018: '<': signed/unsigned mismatch
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1224,16): warning C4018: '<': signed/unsigned mismatch
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1255,16): warning C4018: '<': signed/unsigned mismatch
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1259,16): warning C4018: '<': signed/unsigned mismatch
+C:\School Mech 472\Project Repository\robot_A_offence\Team_functions.cpp(1263,16): warning C4018: '<': signed/unsigned mismatch
   timer.cpp
   update_simulation.cpp
   vision.cpp
   vision_simulation.cpp
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\vision_simulation.cpp(495,24): warning C4101: 'q4': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\vision_simulation.cpp(495,14): warning C4101: 'q2': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\vision_simulation.cpp(495,29): warning C4101: 'q5': unreferenced local variable
-C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\vision_simulation.cpp(495,19): warning C4101: 'q3': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\vision_simulation.cpp(495,24): warning C4101: 'q4': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\vision_simulation.cpp(495,14): warning C4101: 'q2': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\vision_simulation.cpp(495,29): warning C4101: 'q5': unreferenced local variable
+C:\School Mech 472\Project Repository\robot_A_offence\vision_simulation.cpp(495,19): warning C4101: 'q3': unreferenced local variable
   Generating Code...
+  LINK : .\Debug\robot_A_offence.exe not found or not built by the last incremental link; performing full link
 image_transfer.lib(image_transfer.obj) : warning LNK4099: PDB '' was not found with 'image_transfer.lib(image_transfer.obj)' or at ''; linking object as if no debug info
 image_transfer.lib(Video_IO.obj) : warning LNK4099: PDB '' was not found with 'image_transfer.lib(Video_IO.obj)' or at ''; linking object as if no debug info
-  robot_A_offence.vcxproj -> C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Debug\robot_A_offence.exe
+  robot_A_offence.vcxproj -> C:\School Mech 472\Project Repository\robot_A_offence\Debug\robot_A_offence.exe
