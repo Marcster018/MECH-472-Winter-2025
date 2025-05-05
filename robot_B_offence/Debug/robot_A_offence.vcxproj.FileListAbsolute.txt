@@ -1,0 +1,4 @@
+C:\Users\jacob\Documents\GitHub\MECH-472-Winter-2025\robot_A_offence\Debug\robot_A_offence.exe
+C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence\Debug\robot_A_offence.exe
+C:\School Mech 472\Project Repository\robot_A_offence\Debug\robot_A_offence.exe
+C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_B_offence\Debug\robot_A_offence.exe

@@ -1,0 +1,6 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (.\Debug\) contains files shared from another project (robot_A_offence.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  robot_A_offence_challenge.cpp
+C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence_challenge\Team_functions.h(40,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
+  (compiling source file 'robot_A_offence_challenge.cpp')
+  
+  robot_A_offence_challenge.vcxproj -> C:\School Mech 472\Project Repository\MECH-472-Winter-2025\robot_A_offence_challenge\Debug\robot_A_offence_challenge.exe

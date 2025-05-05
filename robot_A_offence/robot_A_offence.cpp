@@ -55,7 +55,7 @@ int main()
 	y_obs[1] = 400; // pixels
 
 	x_obs[2] = 185; // pixels
-	y_obs[2] = 135; // pixels
+	y_obs[2] = 175; // pixels
 
 
 	//Map Variables
@@ -91,7 +91,7 @@ int main()
 	
 	// set opponent initial position (pixels) and angle (rad)
 	x0_o = 75;
-	y0_o = 200;
+	y0_o = 250;
 	theta0_o = 1.5708;
 	set_opponent_position(x0_o,y0_o,theta0_o);
 

@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\School Mech 472\\Project Repository\\MECH-472-Winter-2025\\robot_A_offence_challenge\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_offence_challenge.vcxproj|C:\\School Mech 472\\Project Repository\\MECH-472-Winter-2025\\robot_A_offence_challenge\\robot_A_offence_challenge.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_offence_challenge.vcxproj|solutionrelative:robot_A_offence_challenge.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_offence_challenge.vcxproj|C:\\School Mech 472\\Project Repository\\MECH-472-Winter-2025\\robot_A_offence_challenge\\Team_functions.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|robot_A_offence_challenge.vcxproj|solutionrelative:Team_functions.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Team_functions.cpp",
+              "DocumentMoniker": "C:\\School Mech 472\\Project Repository\\MECH-472-Winter-2025\\robot_A_offence_challenge\\Team_functions.cpp",
+              "RelativeDocumentMoniker": "Team_functions.cpp",
+              "ToolTip": "C:\\School Mech 472\\Project Repository\\MECH-472-Winter-2025\\robot_A_offence_challenge\\Team_functions.cpp",
+              "RelativeToolTip": "Team_functions.cpp",
+              "ViewState": "AgIAAOQBAAAAAAAAAAAswAQCAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-05T23:23:06.879Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "robot_A_offence_challenge.cpp",
+              "DocumentMoniker": "C:\\School Mech 472\\Project Repository\\MECH-472-Winter-2025\\robot_A_offence_challenge\\robot_A_offence_challenge.cpp",
+              "RelativeDocumentMoniker": "robot_A_offence_challenge.cpp",
+              "ToolTip": "C:\\School Mech 472\\Project Repository\\MECH-472-Winter-2025\\robot_A_offence_challenge\\robot_A_offence_challenge.cpp",
+              "RelativeToolTip": "robot_A_offence_challenge.cpp",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAADMAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-05T23:20:07.87Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
