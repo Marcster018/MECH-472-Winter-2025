@@ -1,0 +1,47 @@
+﻿  program.cpp
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(61,29): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(61,25): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(62,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(63,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(67,29): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(67,25): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(68,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(69,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(73,29): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(73,25): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(74,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(75,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(79,29): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(79,25): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(80,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(81,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(34,9): warning C4101: 'j': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(34,6): warning C4101: 'i': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(91,9): warning C4101: 'p': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(141,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(142,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(151,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(152,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(167,28): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(167,24): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(198,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(183,16): warning C4101: 'plc': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(182,6): warning C4101: 'k': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(182,12): warning C4101: 'j': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(182,9): warning C4101: 'i': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(262,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(263,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(310,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(312,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(313,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(314,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(299,9): warning C4101: 'j': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(299,6): warning C4101: 'i': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(588,61): warning C4101: 'ObsLabel': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(588,36): warning C4101: 'Jc': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(588,50): warning C4101: 'Obs': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(588,43): warning C4101: 'Oc': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(588,29): warning C4101: 'Ic': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(460,31): warning C4101: 'size_obs': unreferenced local variable
+C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\program.cpp(588,21): warning C4101: 'nlabel': unreferenced local variable
+  program.vcxproj -> C:\School Mech 472\Project\Vision Assignment 6\vision_simulator_version_2.53_manual_opponent\Debug\program.exe

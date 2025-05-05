@@ -1,0 +1,70 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\School Mech 472\\Project\\Vision Assignment 6\\vision_simulator_version_2.53_manual_opponent\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|program.vcxproj|C:\\School Mech 472\\Project\\Vision Assignment 6\\vision_simulator_version_2.53_manual_opponent\\program.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|program.vcxproj|solutionrelative:program.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|program.vcxproj|C:\\School Mech 472\\Project\\Vision Assignment 6\\vision_simulator_version_2.53_manual_opponent\\robot.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|program.vcxproj|solutionrelative:robot.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|program.vcxproj|C:\\School Mech 472\\Project\\Vision Assignment 6\\vision_simulator_version_2.53_manual_opponent\\vision_simulation.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7E56BCE6-5C39-441D-9CAC-2739075FA2BC}|program.vcxproj|solutionrelative:vision_simulation.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "program.cpp",
+              "DocumentMoniker": "C:\\School Mech 472\\Project\\Vision Assignment 6\\vision_simulator_version_2.53_manual_opponent\\program.cpp",
+              "RelativeDocumentMoniker": "program.cpp",
+              "ToolTip": "C:\\School Mech 472\\Project\\Vision Assignment 6\\vision_simulator_version_2.53_manual_opponent\\program.cpp",
+              "RelativeToolTip": "program.cpp",
+              "ViewState": "AgIAAE8BAAAAAAAAAAAAAMABAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-11T17:13:39.869Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "robot.cpp",
+              "DocumentMoniker": "C:\\School Mech 472\\Project\\Vision Assignment 6\\vision_simulator_version_2.53_manual_opponent\\robot.cpp",
+              "RelativeDocumentMoniker": "robot.cpp",
+              "ToolTip": "C:\\School Mech 472\\Project\\Vision Assignment 6\\vision_simulator_version_2.53_manual_opponent\\robot.cpp",
+              "RelativeToolTip": "robot.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-03T21:52:39.925Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "vision_simulation.cpp",
+              "DocumentMoniker": "C:\\School Mech 472\\Project\\Vision Assignment 6\\vision_simulator_version_2.53_manual_opponent\\vision_simulation.cpp",
+              "RelativeDocumentMoniker": "vision_simulation.cpp",
+              "ToolTip": "C:\\School Mech 472\\Project\\Vision Assignment 6\\vision_simulator_version_2.53_manual_opponent\\vision_simulation.cpp",
+              "RelativeToolTip": "vision_simulation.cpp",
+              "ViewState": "AgIAACoAAAAAAAAAAAAEwCQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-03T22:50:06.278Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
