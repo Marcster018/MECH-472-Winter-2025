@@ -196,7 +196,6 @@ int main()
 
 		//View changes
 		view_rgb_image(rgb,v_mode);
-		pause();
 	}
 
 	// free the image memory before the program completes
