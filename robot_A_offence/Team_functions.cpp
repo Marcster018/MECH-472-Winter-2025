@@ -232,7 +232,7 @@ void find_obstacles(image& rgb, image& label, image& a, int nlabel, vector<int>&
 		if (diff < 3 && diff>0 &&min>10) {//by trial and error below 3 were the obstacles for diff and min 10 is to remove noise
 			OL.push_back(l);
 			centroid(a, label, l, ic, jc);
-			//draw_point_rgb(rgb, ic, jc, 255, 0, 0); //For Troubleshooting
+			draw_point_rgb(rgb, ic, jc, 255, 0, 0); //For Troubleshooting
 		}
 	}
 }
@@ -305,7 +305,7 @@ void opponent_track(int Ic[4], int Jc[4], image& rgb, image& label, int& pw_r, i
 	}
 
 	//drawing point
-	draw_point_rgb(rgb, id, jd, 255, 0, 255); //draw point of where the robot looks
+	//draw_point_rgb(rgb, id, jd, 255, 0, 255); //draw point of where the robot looks
 
 }
 
