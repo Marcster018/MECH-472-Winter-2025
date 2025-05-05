@@ -46,7 +46,7 @@ int main()
 	//Obstacle Variables
 	const int N_obs = 5;	// number of obstacles
 	char obstacle_file[N_obs][S_MAX] = { //File names for all the obstacles. You must have the same number of names as obstacles
-		"obstacle_blue.bmp" , "obstacle_green.bmp", "obstacle_orange.bmp", "obstacle_red.bmp", "obstacle_blue.bmp"
+		"obstacle_blue.bmp" , "obstacle_green.bmp", "obstacle_orange.bmp",
 	};		
 	x_obs[0] = 300; // pixels
 	y_obs[0] = 135; // pixels
@@ -56,12 +56,6 @@ int main()
 
 	x_obs[2] = 185; // pixels
 	y_obs[2] = 135; // pixels
-
-	x_obs[3] = 185; // pixels
-	y_obs[3] = 400; // pixels
-
-	x_obs[4] = 300; // pixels
-	y_obs[4] = 300; // pixels
 
 
 	//Map Variables

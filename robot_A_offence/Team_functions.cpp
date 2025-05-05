@@ -480,10 +480,10 @@ void find_path(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image& label, 
 		ye = ye + step;
 
 		//boundaries
-		if (xs < 0) xs = 0;
-		if (xe >= width) xe = width - 1;
-		if (ys < 0) ys = 0;
-		if (ye >= height) ye = height - 1;
+		if (xs < 0) xs = 30;
+		if (xe >= width) xe = width - 30;
+		if (ys < 0) ys = 30;
+		if (ye >= height) ye = height - 30;
 
 		//horizontal
 		for (int i = xs; i <= xe; i++) {
