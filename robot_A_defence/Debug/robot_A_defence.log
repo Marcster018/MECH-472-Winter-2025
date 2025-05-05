@@ -1,47 +1,57 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (.\Debug\) contains files shared from another project (robot_A_offence.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  robot_A_defence.cpp
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.h(24,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
+  (compiling source file 'robot_A_defence.cpp')
+  
+  robot.cpp
+  shared_memory.cpp
   Example.cpp
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.h(39,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.h(24,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
   (compiling source file 'Example.cpp')
   
   Team_functions.cpp
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.h(39,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.h(24,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
   (compiling source file 'Team_functions.cpp')
   
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(26,6): warning C4101: 'height': unreferenced local variable
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(26,14): warning C4101: 'width': unreferenced local variable
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(102,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(103,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(112,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(113,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(553,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(599,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(640,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(670,57): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(670,29): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(673,54): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(673,29): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(676,57): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(676,29): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(705,6): warning C4101: 'height': unreferenced local variable
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(705,14): warning C4101: 'width': unreferenced local variable
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1266,37): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1266,37): warning C4244:         with
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1266,37): warning C4244:         [
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1266,37): warning C4244:             _Ty=int
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1266,37): warning C4244:         ]
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1267,39): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1267,39): warning C4244:         with
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1267,39): warning C4244:         [
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1267,39): warning C4244:             _Ty=int
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1267,39): warning C4244:         ]
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1274,16): warning C4018: '<': signed/unsigned mismatch
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1280,16): warning C4018: '<': signed/unsigned mismatch
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1305,16): warning C4018: '<': signed/unsigned mismatch
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1309,16): warning C4018: '<': signed/unsigned mismatch
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(1313,16): warning C4018: '<': signed/unsigned mismatch
-  robot_A_defence.cpp
-C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.h(39,13): warning C4091: 'static ': ignored on left of 'ColourTypes' when no variable is declared
-  (compiling source file 'robot_A_defence.cpp')
-  
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(47,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(48,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(57,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(58,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(96,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(141,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(182,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(212,57): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(212,29): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(215,54): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(215,29): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(218,57): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(218,29): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(246,6): warning C4101: 'height': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(246,14): warning C4101: 'width': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(809,37): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(809,37): warning C4244:         with
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(809,37): warning C4244:         [
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(809,37): warning C4244:             _Ty=int
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(809,37): warning C4244:         ]
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(810,39): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(810,39): warning C4244:         with
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(810,39): warning C4244:         [
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(810,39): warning C4244:             _Ty=int
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(810,39): warning C4244:         ]
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(817,16): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(823,16): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(848,16): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(852,16): warning C4018: '<': signed/unsigned mismatch
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Team_functions.cpp(856,16): warning C4018: '<': signed/unsigned mismatch
+  timer.cpp
+  update_simulation.cpp
+  vision.cpp
+  vision_simulation.cpp
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\vision_simulation.cpp(495,24): warning C4101: 'q4': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\vision_simulation.cpp(495,14): warning C4101: 'q2': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\vision_simulation.cpp(495,29): warning C4101: 'q5': unreferenced local variable
+C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\vision_simulation.cpp(495,19): warning C4101: 'q3': unreferenced local variable
   Generating Code...
+image_transfer.lib(image_transfer.obj) : warning LNK4099: PDB '' was not found with 'image_transfer.lib(image_transfer.obj)' or at ''; linking object as if no debug info
+image_transfer.lib(Video_IO.obj) : warning LNK4099: PDB '' was not found with 'image_transfer.lib(Video_IO.obj)' or at ''; linking object as if no debug info
   robot_A_defence.vcxproj -> C:\Users\frede\Documents\GitHub\MECH-472-Winter-2025\robot_A_defence\Debug\robot_A_defence.exe

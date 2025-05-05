@@ -20,64 +20,9 @@
 using namespace std;
 #define KEY(c) ( GetAsyncKeyState((int)(c)) & (SHORT)0x8000 )
 
-//Attack Function
-void Attack_Sequence(image& rgb, int& pw_r, int& pw_l, int& pw_laser, int& laser, char Player) {
-
-	int height, width, nlabelBW, nlabelColour;
-	static vector <array <int, 6>> Bulk_Data; //Using vector to be able to scale the number of rows to the number of objects
-	static array<array<int, 6>, 2> Robot_Data; //Using array notation to be able to use the function of array a = array b instead of using pointer notation
-	static array<array<int, 6>, 2> Opponent_Data;//Using array notation to be able to use the function of array a = array b instead of using pointer notation
-	static vector <array <int, 6>> Obstacle_Data;//Using vector to be able to scale the number of rows to the number of objects
-	bool detected = false;
-	image ProcessingImage, LabelImageBW, LabelImageColour;
-
-	ProcessingImage.type = RGB_IMAGE;
-	ProcessingImage.width = rgb.width;
-	ProcessingImage.height = rgb.height;
-
-	LabelImageBW.type = LABEL_IMAGE;
-	LabelImageBW.width = rgb.width;
-	LabelImageBW.height = rgb.height;
-
-	LabelImageColour.type = LABEL_IMAGE;
-	LabelImageColour.width = rgb.width;
-	LabelImageColour.height = rgb.height;
-
-	allocate_image(LabelImageBW);
-	allocate_image(LabelImageColour);
-	allocate_image(ProcessingImage);
-
-	copy(rgb, ProcessingImage);
-
-	Process_Image(ProcessingImage, LabelImageBW, LabelImageColour, nlabelBW, nlabelColour);
-
-	Get_Image_Data(rgb,LabelImageBW,LabelImageColour, nlabelBW,nlabelColour,Bulk_Data);
-
-	Classify_Data(rgb, LabelImageBW, LabelImageColour, nlabelBW, nlabelColour, Bulk_Data, Robot_Data, Opponent_Data, Obstacle_Data, Player);
-
-	//Classify_Data_Troubleshooting(rgb, Robot_Data, Opponent_Data, Obstacle_Data);
-
-	//detect_obstruction(Ic, Jc, ObsLabel, rgb, label, detected);
-
-	/*
-	if (detected == false) {
-		cout << "\nTracking opponent.";
-		opponent_track(Ic, Jc, rgb, label, pw_r, pw_l);
-	}
-	else {
-		pw_l = 1350;
-		pw_r = 1750;
-		//here the patrol function should go
-	}
-	*/
-	//pause();
-
-	free_image(LabelImageBW);
-	free_image(LabelImageColour);
-	free_image(ProcessingImage);
-}
-
 //Anthony's functions
+
+//finds location of ostacles
 void find_obstacles(image& rgb, image& label, image& a, int nlabel, vector<int>& OL) {
 	//the function calculates the radius in 8 directions (every 45 degrees) and checks the diff in the
 	//min and max value for each label
@@ -130,411 +75,9 @@ void find_obstacles(image& rgb, image& label, image& a, int nlabel, vector<int>&
 	}
 }
 
-/*
-void find_hollow_circles(int& nlabels, image& rgb, image& label, image&a, image& rgb0, int Ic[4], int Jc[4]) {
-	ibyte* p, * pc;
-	i2byte* pl, * plc;
+//Frederique's functions
 
-	int R, G, B;
-
-	pl = (i2byte*)label.pdata;
-
-	int i, j, width, height;
-	double ic, jc;
-	int kc;
-
-	width = rgb.width;
-	height = rgb.height;
-
-	p = rgb0.pdata;
-
-
-	for (int label_num = 1; label_num <= nlabels; label_num++) {
-
-		centroid(a, label, label_num, ic, jc);
-		kc = (int)ic + (int)jc * width;
-
-		plc = pl + kc;
-		pc = p + 3 * kc;
-
-		B = *pc;
-		G = *(pc + 1);
-		R = *(pc + 2);
-
-
-		if (*plc == 0) {
-
-			//green
-			if (R < 120 && G >120 && B < 150) {
-				//draw_point_rgb(rgb, ic, jc, 0, 255, 0);
-				Ic[0] = ic;
-				Jc[0] = jc;
-			}
-			//Red
-			else if (R > 100 && G < 100 && B < 100) {
-				//draw_point_rgb(rgb, ic, jc, 255, 0, 0);
-				Ic[1] = ic;
-				Jc[1] = jc;
-			}
-			//orange
-			else if (R > 220 && G > 130 && G < 200 && B < 150) {
-				//draw_point_rgb(rgb, ic, jc, 255, 100, 0);
-				Ic[2] = ic;
-				Jc[2] = jc;
-			}
-			//blue
-			else if (R < 60 && G < 175 && B > 200) {
-				//draw_point_rgb(rgb, ic, jc, 0, 0, 255);
-				Ic[3] = ic;
-				Jc[3] = jc;
-			}
-		}
-	}
-
-}
-
-void clean_up(image& rgb, image&a) {
-	int width, height;
-	image b;
-
-	width = rgb.width;
-	height = rgb.height;
-
-	b.type = GREY_IMAGE;
-	b.width = width;
-	b.height = height;
-
-	allocate_image(b);
-
-	copy(rgb, a);
-	threshold(a, b, 70);
-	copy(b, a);
-	lowpass_filter(a, b);
-	copy(b, a);
-	invert(a, b);
-	copy(b, a);
-	erode(a, b);
-	copy(b, a);
-	dialate(a, b);
-	copy(b, a);
-	dialate(a, b);
-	copy(b, a);
-	copy(a, rgb);
-
-	free_image(b);
-}
-
-void opponent_track(int Ic[4], int Jc[4], image& rgb, image& label, int& pw_r, int& pw_l) {
-
-	//center of opponent
-	int id = (Ic[3] + Ic[2]) / 2;
-	int jd = (Jc[3] + Jc[2]) / 2;
-
-	int width = rgb.width;
-	int height = rgb.height;
-	int size = width * height;
-
-	int k, i, j;
-	i2byte* pl, * plc;
-
-	pl = (i2byte*)label.pdata;
-
-
-	//drawing line between red point and enemy
-	//line is y=mx+b
-
-	int dx = (Ic[0] - id);
-	int dy = (Jc[0] - jd);
-
-	float m, b, y;
-
-	if (dx == 0) {
-		m = 0;
-		b = Ic[0];
-	}
-	else {
-		m = (float)dy / (float)dx;
-		b = Jc[0] - Ic[0] * m;
-	}
-
-	//want to check if the red dot Ic[1], Jc[1] is bellow or above the line than turn the robot accordingly
-	float deadzone = 10;
-	y = m * Ic[1] + b;
-
-	if (id <= Ic[0]) {
-		if (Jc[1] < (y - deadzone)) {
-			pw_r = 2000;
-			pw_l = 2000;
-		}
-		else if (Jc[1] > (y + deadzone)) {
-			pw_r = 1000;
-			pw_l = 1000;
-		}
-		else {
-			pw_r = 1500;
-			pw_l = 1500;
-		}
-	}
-
-	else if (id > Ic[0]) {
-		if (Jc[1] < (y - deadzone)) {
-			pw_r = 1000;
-			pw_l = 1000;
-		}
-		else if (Jc[1] > (y + deadzone)) {
-			pw_r = 2000;
-			pw_l = 2000;
-		}
-		else {
-			pw_r = 1500;
-			pw_l = 1500;
-		}
-	}
-
-	//drawing point
-	draw_point_rgb(rgb, id, jd, 255, 0, 255); //draw point of where the robot looks
-
-}
-
-void detect_obstruction(int Ic[4], int Jc[4], vector<int>& OL, image& rgb, image& label, bool& detected) {
-	int width = rgb.width;
-	int height = rgb.height;
-	int size = width * height;
-	bool obstruction = false; //different bool so it is only updated at the end
-
-	// Pointer to label data
-	i2byte* pl = (i2byte*)label.pdata;
-
-	// Center of defending
-	int cd_x = (Ic[2] + Ic[3]) / 2;
-	int cd_y = (Jc[2] + Jc[3]) / 2;
-
-	// Center of rotation attacking
-	int cr_x = Ic[0];
-	int cr_y = Jc[0];
-
-	// Calculate line equation parameters y = mx + b
-	float dx = cr_x - cd_x;
-	float dy = cr_y - cd_y;
-
-	if (dx == 0) {
-		for (int k = 0; k < size; k++) {
-			int i = k % width;
-			int j = (k - i) / width;
-			if (abs(i - (int)cr_x) <= 1) {
-				draw_point_rgb(rgb, i, j, 255, 0, 0);
-				for (int a : OL) {
-					if (pl[k] == a) obstruction = true;
-				}
-			}
-		}
-	}
-	else {
-		float m = dy / dx;
-		float b = cr_y - cr_x * m;
-		//line drawing
-
-		//check if the pixels on the line have the same label as the obstacles
-		for (int k = 0; k < size; k++) {
-			int i = k % width;
-			int j = (k - i) / width;
-			float y = i * m + b;
-			if (abs(j - (int)y) <= 1) {
-				draw_point_rgb(rgb, i, j, 255, 0, 0);
-				for (int a : OL) {
-					if (pl[k] == a) obstruction = true;
-				}
-			}
-		}
-	}
-	detected = obstruction;
-}
-
-void go_to(int Ic[4], int Jc[4], int& pw_l, int& pw_r, image& rgb, image& label, int id, int jd) {
-	int i, j, k, width, size, height;
-	width = rgb.width;
-	height = rgb.height;
-	size = width * height;
-	bool locked = false;
-	i2byte* pl;
-	pl = (i2byte*)label.pdata;
-	k = id + jd * width;
-
-	if (pl[k] == 0) {
-		int ir = (Ic[0] + Ic[1]) / 2;
-		int jr = (Jc[0] + Jc[1]) / 2;
-
-		int V[2] = { id - ir,jd - jr }; //V[0]=x, V[1]=y
-		float angle = atan2(V[1], V[0]);
-		float robot_angle = atan2(Jc[0] - Jc[1], Ic[0] - Ic[1]);
-		float angle_error = angle - robot_angle;
-
-		draw_point_rgb(rgb, id, jd, 200, 0, 0);
-
-		if (fabs(angle_error) > 0.05) {
-			if (angle_error > 0) {
-				pw_l = 2000;
-				pw_r = 2000;
-			}
-			else {
-				pw_l = 1000;
-				pw_r = 1000;
-			}
-			locked = false;
-		}
-		else {
-			pw_l = 1500;
-			pw_r = 1500;
-			locked = true;
-		}
-
-		int x_error = abs(id - Ic[0]);
-		int y_error = abs(jd - Jc[0]);
-
-		if (x_error > 10 && y_error > 10) {
-			if (locked == true) {
-				pw_l = 1000;
-				pw_r = 2000;
-			}
-		}
-		else if (x_error > 2 && y_error > 2) {
-			if (locked == true) {
-				pw_l = 1250;
-				pw_r = 1750;
-			}
-		}
-		else if (x_error > 1 && y_error < 1) {
-			pw_l = 1500;
-			pw_r = 1500;
-		}
-	}
-
-}
-*/
-
-//Fred's functions
-/*
-int auto_select_shape_by_size(i2byte& nlabel, image& label)
-// select an object from a binary image based on its area
-// use instead of the select_object function in the
-// find_object function
-{
-#define MAX_LABELS 256
-	int labelAreas[MAX_LABELS] = { 0 };
-	int wheelArea = 500;
-	i2byte* pl;
-
-	acquire_image_sim(rgb0);
-	label_objects(tvalue);
-
-	pl = (i2byte*)label.pdata;
-
-	//measuring the area (amount of pixels) of a shape
-	for (int y = 0; y < label.height; y++) {
-		for (int x = 0; x < label.width; x++) {
-			int labelVal = *(pl + y * label.width + x); //get label at pixel (x,y)
-			if (labelVal > 0 && labelVal < MAX_LABELS) {
-				labelAreas[labelVal]++; //increment that label's area count
-			}
-		}
-	}
-
-	//checks each shape that are of a certain area
-	//if multiple, only selects one (the last one)
-	for (int l = 1; l < MAX_LABELS; l++) {
-		if (labelAreas[l] < 1000 && labelAreas[l]>100) {
-			wheelArea = labelAreas[l];
-			nlabel = l;
-		}
-	}
-	return 0; // no errors
-}
-*/
-
-
-/*
-int find_obstacles(image& rgb, image& label, image& a, int obs_x[], int obs_y[], int max_obs) {
-	const int MAX_LABELS = 255;
-	int labelAreas[MAX_LABELS] = { 0 };
-	int n_obstacles = 0;
-	i2byte* pl;
-
-	pl = (i2byte*)label.pdata;
-
-
-	//measuring the area (amount of pixels) of a shape
-	for (int y = 0; y < label.height; y++) {
-		for (int x = 0; x < label.width; x++) {
-			int labelVal = *(pl + y * label.width + x); //get label at pixel (x,y)
-			if (labelVal > 0 && labelVal < MAX_LABELS) {
-				labelAreas[labelVal]++; //increment that label's area count
-			}
-			
-		}
-	}
-	
-
-	for (int label_id = 1; label_id <= 255; label_id++) {
-		double ic, ij;
-		centroid(a, label, label_id, ic, ij);
-		if (labelAreas[label_id] > 2800) {
-			//cout << "\nlabel = " << label_id;
-			if (n_obstacles < max_obs) {
-				obs_x[n_obstacles] = (int)ic;
-				obs_y[n_obstacles] = (int)ij;
-				n_obstacles++;
-			}
-		}
-	}
-	//cout << "\n_obs = " << n_obstacles;
-	return n_obstacles;
-}
-*/
-
-/*
-double estimate_radius_from_image(image& label, double IC, double JC) {
-	double radius, radius_max, radius_div, arc, arc_max, arc_div;
-	int i, j, width, height, k;
-	const double PI = 3.14159;
-	ibyte* pc;
-	ibyte r, g, b;
-
-	pc = label.pdata;
-	radius_max = 100;
-	radius_div = 1;
-	arc_div = 1;
-	width = label.width;
-	height = label.height;
-
-
-	for (radius = 1; radius < radius_max; radius += radius_div) {
-		arc_max = 2 * PI * radius;
-		for (arc = 0; arc <= arc_max; arc += arc_div) {
-			double beta = arc / radius;
-			i = (int)(IC + radius * cos(beta));
-			j = (int)(JC + radius * sin(beta));
-
-			// limit (i,j) from going off the image
-			if (i < 0) i = 0;
-			if (i > width - 1) i = width - 1;
-			if (j < 0) j = 0;
-			if (j > height - 1) j = height - 1;
-
-			k = i + width * j;
-			r = pc[3 * k + 0];
-			g = pc[3 * k + 1];
-			b = pc[3 * k + 2];
-
-			if (r > 250 && g > 250 && b > 250) {
-				return radius; // obstacle ends, return radius
-			}
-			
-		}
-	}
-	return radius_max; // max radius if full disk
-}
-*/
-
+//Checks if the defender is in the opponent's line of sight
 bool is_robot_in_line_of_sight(array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data) {
 	double dx, dy, fx, fy, a, b, c, sqrt_quad, t1, t2;
 	int defender_x, defender_y;
@@ -579,7 +122,7 @@ bool is_robot_in_line_of_sight(array<array<int, 6>, 2>& Robot_Data, array<array<
 	return true;
 }
 
-
+//Finds best possible hiding position for the defender
 void find_hiding_position(array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data, double& hide_x, double& hide_y) {
 	int defender_x, defender_y;
 	int opponent_x, opponent_y;
@@ -620,7 +163,7 @@ void find_hiding_position(array<array<int, 6>, 2>& Robot_Data, array<array<int, 
 
 }
 
-
+//Makes the defender move to best possible hiding position
 void navigate_to_target(robot* defender, array<array<int, 6>, 2>& Robot_Data, array<array<int, 6>, 2>& Opponent_Data, vector<array<int, 6>>& Obstacle_Data, double hide_x, double hide_y, int& pw_l, int& pw_r) {
 	double rx = defender->x[2];
 	double ry = defender->x[3];
@@ -698,7 +241,7 @@ void navigate_to_target(robot* defender, array<array<int, 6>, 2>& Robot_Data, ar
 	if (pw_r > 2000) pw_r = 2000;
 }
 
-
+//Defence sequence moves both the opponent and the defender
 void Defence_Sequence(robot* defender, image& rgb, int& pw_l, int& pw_r, char Player, int& pw_l_o, int& pw_r_o) {
 	int height, width, nlabelBW, nlabelColour;
 	static vector <array <int, 6>> Bulk_Data; //Using vector to be able to scale the number of rows to the number of objects
@@ -764,6 +307,7 @@ void Defence_Sequence(robot* defender, image& rgb, int& pw_l, int& pw_r, char Pl
 	free_image(ProcessingImage);
 }
 
+//Makes the opponent go in a rectangular path in a loop
 void opponent_loop_path(array<array<int, 6>, 2>& Opponent_Data, int& pw_l_o, int& pw_r_o) {
 
 	static int phase = 1;
@@ -784,7 +328,7 @@ void opponent_loop_path(array<array<int, 6>, 2>& Opponent_Data, int& pw_l_o, int
 
 		while (angle_diff > PI) angle_diff -= 2 * PI;
 		while (angle_diff < -PI) angle_diff += 2 * PI;
-
+		cout << "\nangle = " << angle_diff;
 		int turn = (int)(angle_diff * 500);
 		if (dist > 40.0) {
 			if (fabs(angle_diff) > 0.3) {
@@ -1170,6 +714,7 @@ static bool NotGrey(int R, int G, int B) {
 		return 1;
 	}
 }
+
 //Determine colour of object based on possible colour types
 static ColourTypes Object_Colour (int R, int G, int B) {
 

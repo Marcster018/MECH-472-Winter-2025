@@ -54,15 +54,6 @@ int main()
 	x_obs[1] = 135; // pixels
 	y_obs[1] = 135; // pixels
 
-	//x_obs[2] = 485; // pixels
-	//y_obs[2] = 135; // pixels
-
-	//x_obs[3] = 585; // pixels
-	//y_obs[3] = 400; // pixels
-
-//	x_obs[4] = 450; // pixels
-//	y_obs[4] = 350; // pixels
-
 
 	//Map Variables
 	width1  = 640;
@@ -150,23 +141,7 @@ int main()
 	// measure initial clock time
 	tc0 = high_resolution_time(); 
 	
-	//Determine opponent behaviour
-	cout << "\nOpponent behaviour has been predefined to best illustrate the capabilities of our Attack program.\nHowever the opponent can also be controlled using keyboard input for further testing.";
-	cout << "\n\nTo run the program against the enemy with the predefined behaviour, press 1.";
-	cout << "\n\nTo run the program against the enemy with behaviour controlled by a keyboard, press 2.";
-	cout << "\n\nOnce an opponent is selected, press 'Enter' to begin\n";
-
-	/*while (true) {
-		cin >> opponent_mode;
-
-		if (opponent_mode == 1 || opponent_mode == 2) {
-			break;
-		}
-		else {
-			cout << "\n\n This input is not valide. Please enter 1 or 2";
-				opponent_mode = 0;
-		}
-	}*/
+	cout << "\nOpponent behaviour has been predefined to best illustrate the capabilities of our Attack program.";
 	
 	while(1) {
 
@@ -178,14 +153,11 @@ int main()
 		Defence_Sequence(S1->P[1], rgb, pw_l, pw_r, Player, pw_l_o, pw_r_o);
 		S1->P[1]->set_inputs(pw_l,pw_r,pw_laser,laser);
 
-		//Control opponent robot
-		//Example_KeyboardInput(pw_l_o, pw_r_o);
 		set_opponent_inputs(pw_l_o, pw_r_o, pw_laser_o, laser_o, opponent_max_speed);
 		
 		
 		//View changes
 		view_rgb_image(rgb);
-		//pause();
 	}
 
 	// free the image memory before the program completes
