@@ -91,13 +91,13 @@ int main()
 
 	// set robot initial position (pixels) and angle (rad)
 	x0 = 470;
-	y0 = 170;
+	y0 = 150;
 	theta0 = 0;
 	set_robot_position(x0,y0,theta0);
 	
 	// set opponent initial position (pixels) and angle (rad)
 	x0_o = 75;
-	y0_o = 150;
+	y0_o = 200;
 	theta0_o = 1.5708;
 	set_opponent_position(x0_o,y0_o,theta0_o);
 
